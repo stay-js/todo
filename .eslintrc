@@ -1,0 +1,44 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "plugin:@next/next/recommended",
+    "plugin:import/typescript",
+    "plugin:prettier/recommended",
+    "react-app",
+    "airbnb",
+    "airbnb-typescript",
+    "next",
+    "next/core-web-vitals"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  "plugins": ["react", "@typescript-eslint", "prettier"],
+  "rules": {
+    "consistent-return": "warn", // sometimes I need non returning functions and I prefer using arrow function
+    "import/prefer-default-export": "warn", // not enough to make it an error
+    "react/jsx-props-no-spreading": "warn", // _app.tsx: <Component {...pageProps} />
+    "react/jsx-one-expression-per-line": "off", // {' '} + prettier breaks it so i have to turn it off
+    "react/no-unescaped-entities": "off", // next.js doc said to turn it off
+    "react/function-component-definition": "off", // I prefer using arrow function
+    "@next/next/no-page-custom-font": "off", // next.js doc said to turn it off
+    "object-curly-newline": "off", // I just don like it
+    "jsx-a11y/anchor-is-valid": "off", // next/link breaks it so i have to turn it off
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "jsx-a11y/no-noninteractive-element-interactions": "off",
+    "operator-linebreak": "off",
+    "no-console": "off",
+    "@typescript-eslint/no-unused-expressions": "off"
+  }
+}
