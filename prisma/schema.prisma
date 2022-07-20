@@ -16,8 +16,7 @@ model Todo {
     id     String @id @default(cuid())
     user   User   @relation(fields: [userId], references: [id])
     userId String
-    todo   String
-    status String
+    body   String
 }
 
 // Necessary for Next auth

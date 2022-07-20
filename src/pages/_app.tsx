@@ -36,7 +36,7 @@ const App: AppType = ({ Component, pageProps: { session, ...pageProps } }) => (
 
     <div className="flex flex-col justify-between min-h-screen">
       <SessionProvider session={session}>
-        <MantineProvider theme={{ primaryColor: 'green', fontFamily: 'Roboto' }}>
+        <MantineProvider theme={{ primaryColor: 'green', colorScheme: 'dark' }}>
           <div>
             {/* eslint-disable-next-line react/jsx-props-no-spreading */}
             <Component {...pageProps} />
