@@ -13,18 +13,13 @@ const LandingPage: NextPage = () => {
         <meta property="og:title" content="Todo" key="title" />
         <meta name="twitter:title" content="Todo" />
 
-        <meta
-          name="description"
-          content="Full stack developer wannabe. IT Student. Kyokushin. Muay Thai."
-        />
-        <meta
-          property="og:description"
-          content="Full stack developer wannabe. IT Student. Kyokushin. Muay Thai."
-        />
-        <meta
-          name="twitter:description"
-          content="Full stack developer wannabe. IT Student. Kyokushin. Muay Thai."
-        />
+        <meta name="url" content="https://todo.znagy.hu/" />
+        <meta property="og:url" content="https://todo.znagy.hu/" />
+        <meta property="twitter:url" content="https://todo.znagy.hu/" />
+
+        <meta name="description" content="Todo App with GitHub authentication." />
+        <meta property="og:description" content="Todo App with GitHub authentication." />
+        <meta name="twitter:description" content="Todo App with GitHub authentication." />
       </Head>
 
       {!data && <SignIn />}
