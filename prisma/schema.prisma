@@ -16,7 +16,7 @@ model Todo {
     id     String @id @default(cuid())
     user   User   @relation(fields: [userId], references: [id])
     userId String
-    body   String
+    body   String @db.VarChar(200)
 }
 
 // Necessary for Next auth

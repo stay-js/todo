@@ -5,25 +5,21 @@ import { Loader, TextInput } from '@mantine/core';
 import trpc from '../../utils/trpc';
 import Error from '../../components/Error';
 
-import type InputEvent from '../../interfaces/InputEvent.interface';
-import type { TodoProps as Props, TodoErrors as Errors } from '../../interfaces/Todo.interface';
+const validate = (value: string): string | null => {
+  let error: string | null = null;
 
-const defaultValues: Props = { body: '' };
+  if (!value) error = 'Please specify a todo!';
+  if (value.length > 200) error = 'Length should be between 0 and 200!';
 
-const validate = (values: Props): Errors => {
-  const errors: Errors = {};
-
-  if (!values.body) errors.body = 'Please specify a todo!';
-
-  return errors;
+  return error;
 };
 
 const Content: React.FC = () => {
-  const [errors, setErrors] = useState<Errors>({});
-  const [values, setValues] = useState<Props>(defaultValues);
+  const [error, setError] = useState<string | null>(null);
+  const [value, setValue] = useState<string>('');
 
   const { data: session } = useSession();
-  const { mutate: fetchTodos, data, isError, isLoading } = trpc.useMutation(['todo.get-todos']);
+  const { mutate: fetchTodos, data, isError, isLoading } = trpc.useMutation(['todo.get']);
 
   const { mutate: createTodo } = trpc.useMutation(['todo.create'], {
     onSettled() {
@@ -37,17 +33,15 @@ const Content: React.FC = () => {
     },
   });
 
-  const handleChange = ({ key, value }: InputEvent) => setValues({ ...values, [key]: value });
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const newErrors = validate(values);
-    setErrors(newErrors);
+    const newError = validate(value);
+    setError(newError);
 
-    if (Object.keys(newErrors).length === 0) {
-      createTodo(values);
-      setValues(defaultValues);
+    if (!newError) {
+      createTodo({ body: value });
+      setValue('');
     }
   };
 
@@ -86,7 +80,7 @@ const Content: React.FC = () => {
 
       <main className="mt-8 content">
         {isError && <Error />}
-        {isLoading && <Loader className="mx-auto" />}
+        {isLoading && <Loader className="mx-auto my-4" />}
 
         <div className="flex flex-col max-w-2xl gap-4 mx-auto">
           {data &&
@@ -98,7 +92,7 @@ const Content: React.FC = () => {
                 {body}
                 <button
                   type="button"
-                  className="px-2 py-1 text-white transition-all bg-red-500 border-2 border-red-500 border-solid rounded h-fit hover:text-red-500 hover:bg-transparent"
+                  className="px-2 py-1 text-white transition-all bg-red-500 border-2 border-red-500 border-solid rounded whitespace-nowrap hover:text-red-500 hover:bg-transparent"
                   onClick={() => deleteTodo({ id })}
                 >
                   Delete Todo
@@ -111,9 +105,9 @@ const Content: React.FC = () => {
               className="w-full"
               placeholder="Create new todo:"
               id="body"
-              value={values.body}
-              onChange={(event) => handleChange({ key: 'body', value: event.currentTarget.value })}
-              error={errors.body}
+              value={value}
+              onChange={(event) => setValue(event.currentTarget.value)}
+              error={error}
             />
 
             <input

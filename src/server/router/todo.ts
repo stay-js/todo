@@ -8,11 +8,10 @@ const todoRouter = createRouter()
 
     return next();
   })
-  .mutation('get-todos', {
+  .mutation('get', {
     async resolve({ ctx }) {
       try {
         const todos = await ctx.prisma.todo.findMany({ where: { userId: ctx.session?.user?.id } });
-        console.log(todos);
         return todos;
       } catch (error) {
         console.error(error);
@@ -22,7 +21,7 @@ const todoRouter = createRouter()
   })
   .mutation('create', {
     input: z.object({
-      body: z.string().min(0).max(400),
+      body: z.string().min(0).max(200),
     }),
     async resolve({ ctx, input }) {
       const { body } = input;
