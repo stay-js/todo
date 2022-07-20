@@ -12,11 +12,26 @@ const Footer: React.FC = () => (
         </Link>{' '}
         from <b>Hungary</b>.
       </p>
-      <Link href="https://github.com/stay-js/todo">
-        <a target="_blank" className="font-bold hover:underline">
-          GitHub
-        </a>
-      </Link>
+
+      <div className="flex gap-4">
+        <Link href="https://github.com/stay-js/todo">
+          <a target="_blank" className="font-bold hover:underline">
+            GitHub
+          </a>
+        </Link>
+
+        <Link href="https://vercel.com/">
+          <a target="_blank" className="font-bold hover:underline">
+            Vercel
+          </a>
+        </Link>
+
+        <Link href="https://planetscale.com/">
+          <a target="_blank" className="font-bold hover:underline">
+            PlanetScale
+          </a>
+        </Link>
+      </div>
     </div>
   </footer>
 );
