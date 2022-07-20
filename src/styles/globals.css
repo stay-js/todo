@@ -7,7 +7,7 @@ html {
 }
 
 body {
-  @apply font-sans text-white bg-neutral-900;
+  @apply overflow-x-hidden font-sans text-white bg-neutral-900;
 }
 
 .content {
