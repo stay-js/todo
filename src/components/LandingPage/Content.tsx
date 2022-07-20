@@ -83,7 +83,7 @@ const Content: React.FC = () => {
         {isError && <Error />}
         {isLoading && <Loader className="mx-auto my-4" />}
 
-        <div className="flex flex-col max-w-2xl gap-4 mx-auto">
+        <div className="flex flex-col max-w-2xl gap-4 mx-auto mb-4">
           <div className="flex items-center justify-between">
             <p className="font-bold">Order Todos:</p>
             <NativeSelect
