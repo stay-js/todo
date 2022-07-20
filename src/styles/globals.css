@@ -2,12 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  color-scheme: dark;
+}
+
 html {
-  @apply antialiased;
+  @apply antialiased scroll-smooth;
 }
 
 body {
   @apply overflow-x-hidden font-sans text-white bg-neutral-900;
+}
+
+.link {
+  @apply transition-all duration-200 bg-left-bottom bg-no-repeat bg-gradient-to-r from-green-400 to-green-700 bg-[length:0%_2px] hover:bg-[length:100%_2px];
 }
 
 .content {
