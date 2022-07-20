@@ -109,7 +109,7 @@ const Content: React.FC = () => {
                     className="px-2 py-1 text-white transition-all bg-red-500 border-2 border-red-500 border-solid rounded whitespace-nowrap hover:text-red-500 hover:bg-transparent"
                     onClick={() => deleteTodo({ id })}
                   >
-                    Delete Todo
+                    Delete <span className="hidden sm:inline-block">Todo</span>
                   </button>
                 </div>
               ))}
