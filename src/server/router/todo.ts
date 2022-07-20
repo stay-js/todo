@@ -9,9 +9,17 @@ const todoRouter = createRouter()
     return next();
   })
   .mutation('get', {
-    async resolve({ ctx }) {
+    input: z.object({
+      order: z.enum(['desc', 'asc']),
+    }),
+    async resolve({ ctx, input }) {
+      const { order } = input;
+
       try {
-        const todos = await ctx.prisma.todo.findMany({ where: { userId: ctx.session?.user?.id } });
+        const todos = await ctx.prisma.todo.findMany({
+          where: { userId: ctx.session?.user?.id },
+          orderBy: { createdAt: order },
+        });
         return todos;
       } catch (error) {
         console.error(error);

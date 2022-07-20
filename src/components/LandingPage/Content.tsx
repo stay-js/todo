@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { signOut, useSession } from 'next-auth/react';
-import { Loader, TextInput } from '@mantine/core';
+import { Loader, TextInput, NativeSelect } from '@mantine/core';
 import trpc from '../../utils/trpc';
 import Error from '../Error';
 
@@ -17,19 +17,20 @@ const validate = (value: string): string | null => {
 const Content: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [value, setValue] = useState<string>('');
+  const [order, setOrder] = useState<'desc' | 'asc'>('desc');
 
   const { data: session } = useSession();
   const { mutate: fetchTodos, data, isError, isLoading } = trpc.useMutation(['todo.get']);
 
   const { mutate: createTodo } = trpc.useMutation(['todo.create'], {
     onSettled() {
-      fetchTodos();
+      fetchTodos({ order });
     },
   });
 
   const { mutate: deleteTodo } = trpc.useMutation(['todo.delete'], {
     onSettled() {
-      fetchTodos();
+      fetchTodos({ order });
     },
   });
 
@@ -46,8 +47,8 @@ const Content: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchTodos();
-  }, [fetchTodos]);
+    fetchTodos({ order });
+  }, [fetchTodos, order]);
 
   return (
     <>
@@ -83,22 +84,36 @@ const Content: React.FC = () => {
         {isLoading && <Loader className="mx-auto my-4" />}
 
         <div className="flex flex-col max-w-2xl gap-4 mx-auto">
-          {data &&
-            data.map(({ id, body }) => (
-              <div
-                key={id}
-                className="flex items-center justify-between gap-2 px-6 py-4 rounded bg-neutral-800"
-              >
-                {body}
-                <button
-                  type="button"
-                  className="px-2 py-1 text-white transition-all bg-red-500 border-2 border-red-500 border-solid rounded whitespace-nowrap hover:text-red-500 hover:bg-transparent"
-                  onClick={() => deleteTodo({ id })}
+          <div className="flex items-center justify-between">
+            <p className="font-bold">Order Todos:</p>
+            <NativeSelect
+              className="select-none w-fit"
+              data={[
+                { value: 'desc', label: 'Latest first' },
+                { value: 'asc', label: 'Oldest first' },
+              ]}
+              value={order}
+              onChange={(event) => setOrder(event.target.value as 'desc' | 'asc')}
+            />
+          </div>
+          <div className="flex flex-col gap-4 max-h-[60vh] overflow-auto">
+            {data &&
+              data.map(({ id, body }) => (
+                <div
+                  key={id}
+                  className="flex items-center justify-between gap-2 px-6 py-4 rounded bg-neutral-800"
                 >
-                  Delete Todo
-                </button>
-              </div>
-            ))}
+                  {body}
+                  <button
+                    type="button"
+                    className="px-2 py-1 text-white transition-all bg-red-500 border-2 border-red-500 border-solid rounded whitespace-nowrap hover:text-red-500 hover:bg-transparent"
+                    onClick={() => deleteTodo({ id })}
+                  >
+                    Delete Todo
+                  </button>
+                </div>
+              ))}
+          </div>
 
           <form onSubmit={handleSubmit} className="flex justify-between w-full gap-2">
             <TextInput
