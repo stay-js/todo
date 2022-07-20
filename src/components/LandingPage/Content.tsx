@@ -87,7 +87,7 @@ const Content: React.FC = () => {
             data.map(({ id, body }) => (
               <div
                 key={id}
-                className="flex items-center justify-between px-6 py-4 rounded bg-neutral-800"
+                className="flex items-center justify-between gap-2 px-6 py-4 rounded bg-neutral-800"
               >
                 {body}
                 <button
