@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { signOut, useSession } from 'next-auth/react';
 import { Loader, TextInput } from '@mantine/core';
 import trpc from '../../utils/trpc';
-import Error from '../../components/Error';
+import Error from '../Error';
 
 const validate = (value: string): string | null => {
   let error: string | null = null;
