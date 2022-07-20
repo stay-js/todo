@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  @apply antialiased;
+}
+
+body {
+  @apply font-sans text-white bg-neutral-900;
+}
+
+.content {
+  @apply mx-auto w-[90%] lg:w-[80%];
+}

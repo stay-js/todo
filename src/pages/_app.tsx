@@ -1,4 +1,4 @@
-import '../styles/style.scss';
+import '../styles/globals.css';
 import type { AppType } from 'next/dist/shared/lib/utils';
 import Head from 'next/head';
 import { withTRPC } from '@trpc/next';
@@ -33,7 +33,9 @@ const App: AppType = ({ Component, pageProps: { session, ...pageProps } }) => (
 
     <div className="flex flex-col justify-between min-h-screen">
       <SessionProvider session={session}>
-        <MantineProvider theme={{ primaryColor: 'green', colorScheme: 'dark' }}>
+        <MantineProvider
+          theme={{ primaryColor: 'green', colorScheme: 'dark', fontFamily: 'Roboto' }}
+        >
           <div>
             {/* eslint-disable-next-line react/jsx-props-no-spreading */}
             <Component {...pageProps} />
