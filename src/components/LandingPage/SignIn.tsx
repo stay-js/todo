@@ -9,7 +9,7 @@ const SignIn: React.FC = () => (
     }}
   >
     <h1 className="mx-4 text-2xl font-bold text-center">
-      In order to use the application please sign in.
+      In order to use the application please sign in...
     </h1>
 
     <button
