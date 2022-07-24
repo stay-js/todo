@@ -39,6 +39,7 @@
     "jsx-a11y/no-noninteractive-element-interactions": "off",
     "operator-linebreak": "off",
     "no-console": "off",
-    "@typescript-eslint/no-unused-expressions": "off"
+    "@typescript-eslint/no-unused-expressions": "off",
+    "import/extensions": "off"
   }
 }

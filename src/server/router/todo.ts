@@ -15,8 +15,6 @@ const todoRouter = createRouter()
     async resolve({ ctx, input }) {
       const { order } = input;
 
-      console.log(ctx.session?.user?.id);
-
       try {
         const todos = await ctx.prisma.todo.findMany({
           where: { userId: ctx.session?.user?.id },
