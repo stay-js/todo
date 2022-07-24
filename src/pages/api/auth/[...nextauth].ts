@@ -1,15 +1,14 @@
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import NextAuth, { type NextAuthOptions } from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
 
-import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import prisma from '../../../server/db/client';
 import { env } from '../../../env/server-env.mjs';
+import prisma from '../../../server/db/client';
 
 export const authOptions: NextAuthOptions = {
   callbacks: {
     session({ session, user }) {
       if (session.user) {
-        // eslint-disable-next-line no-param-reassign
         session.user.id = user.id;
       }
       return session;

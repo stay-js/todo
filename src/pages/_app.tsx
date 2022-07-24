@@ -1,13 +1,13 @@
-import '../styles/globals.css';
+import type { AppRouter } from '../server/router';
 import type { AppType } from 'next/dist/shared/lib/utils';
-import Head from 'next/head';
+import { MantineProvider } from '@mantine/core';
 import { withTRPC } from '@trpc/next';
 import { SessionProvider } from 'next-auth/react';
+import Head from 'next/head';
 import superjson from 'superjson';
-import { MantineProvider } from '@mantine/core';
-import type { AppRouter } from '../server/router';
-import { env } from '../env/client-env.mjs';
 import Footer from '../components/Footer';
+import { env } from '../env/client-env.mjs';
+import '../styles/globals.css';
 
 const App: AppType = ({ Component, pageProps: { session, ...pageProps } }) => (
   <>
@@ -38,7 +38,6 @@ const App: AppType = ({ Component, pageProps: { session, ...pageProps } }) => (
           theme={{ primaryColor: 'green', colorScheme: 'dark', fontFamily: 'Roboto' }}
         >
           <div>
-            {/* eslint-disable-next-line react/jsx-props-no-spreading */}
             <Component {...pageProps} />
           </div>
 

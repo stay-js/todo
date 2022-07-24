@@ -9,8 +9,6 @@
     "plugin:import/typescript",
     "plugin:prettier/recommended",
     "react-app",
-    "airbnb",
-    "airbnb-typescript",
     "next",
     "next/core-web-vitals"
   ],
@@ -25,18 +23,28 @@
   },
   "plugins": ["react", "@typescript-eslint", "prettier"],
   "rules": {
-    "import/extensions": "off", // .mjs files
-    "react/function-component-definition": "off", // I prefer using arrow function
-    "react/jsx-one-expression-per-line": "off", // {' '} + prettier breaks it so i have to turn it off
-    "object-curly-newline": "off", // I just don like it
-    "react/no-unescaped-entities": "off", // next.js doc said to turn it off
-    "@next/next/no-page-custom-font": "off", // next.js doc said to turn it off
     "jsx-a11y/anchor-is-valid": "off", // next/link breaks it so i have to turn it off
-    "no-console": "off", // backend error logs
-    "jsx-a11y/click-events-have-key-events": "off",
-    "jsx-a11y/no-static-element-interactions": "off",
-    "jsx-a11y/no-noninteractive-element-interactions": "off",
-    "operator-linebreak": "off",
-    "@typescript-eslint/no-unused-expressions": "off"
+    "no-var": "error",
+    "react/button-has-type": "error",
+    "react/destructuring-assignment": "warn",
+    "react/no-array-index-key": "warn",
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "type",
+          "builtin",
+          "external",
+          "internal",
+          ["parent", "sibling", "index"],
+          "unknown"
+        ],
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        },
+        "warnOnUnassignedImports": true
+      }
+    ]
   }
 }

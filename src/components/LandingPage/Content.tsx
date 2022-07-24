@@ -1,7 +1,7 @@
+import { Loader, TextInput, NativeSelect } from '@mantine/core';
+import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { signOut, useSession } from 'next-auth/react';
-import { Loader, TextInput, NativeSelect } from '@mantine/core';
 import trpc from '../../utils/trpc';
 import Error from '../Error';
 
