@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { env } from '../../env/server-env.mjs';
 
 declare global {
   // eslint-disable-next-line vars-on-top, no-var
@@ -11,7 +12,7 @@ const prisma =
     log: ['query'],
   });
 
-if (process.env.NODE_ENV !== 'production') {
+if (env.NODE_ENV !== 'production') {
   global.prisma = prisma;
 }
 

@@ -3,7 +3,7 @@ import GithubProvider from 'next-auth/providers/github';
 
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import prisma from '../../../server/db/client';
-import { env } from '../../../server/env';
+import { env } from '../../../env/server-env.mjs';
 
 export const authOptions: NextAuthOptions = {
   callbacks: {

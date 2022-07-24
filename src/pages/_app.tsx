@@ -6,6 +6,7 @@ import { SessionProvider } from 'next-auth/react';
 import superjson from 'superjson';
 import { MantineProvider } from '@mantine/core';
 import type { AppRouter } from '../server/router';
+import { env } from '../env/client-env.mjs';
 import Footer from '../components/Footer';
 
 const App: AppType = ({ Component, pageProps: { session, ...pageProps } }) => (
@@ -50,8 +51,8 @@ const App: AppType = ({ Component, pageProps: { session, ...pageProps } }) => (
 
 export default withTRPC<AppRouter>({
   config() {
-    const url = process.env.NEXT_PUBLIC_VERCEL_URL
-      ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/trpc`
+    const url = env.NEXT_PUBLIC_VERCEL_URL
+      ? `https://${env.NEXT_PUBLIC_VERCEL_URL}/api/trpc`
       : 'http://localhost:3000/api/trpc';
 
     return {
