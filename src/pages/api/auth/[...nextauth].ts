@@ -6,6 +6,14 @@ import prisma from '../../../server/db/client';
 import { env } from '../../../server/env';
 
 export const authOptions: NextAuthOptions = {
+  callbacks: {
+    session({ session, user }) {
+      if (session.user) {
+        session.user.id = user.id;
+      }
+      return session;
+    },
+  },
   adapter: PrismaAdapter(prisma),
   providers: [
     GithubProvider({
