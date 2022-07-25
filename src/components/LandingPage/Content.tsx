@@ -1,3 +1,5 @@
+import type { Todo } from '@prisma/client';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { Loader, TextInput, NativeSelect } from '@mantine/core';
 import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
@@ -15,23 +17,28 @@ const validate = (value: string): string | null => {
 };
 
 const Content: React.FC = () => {
+  const [todos, setTodos] = useState<Todo[] | null>(null);
+  const [order, setOrder] = useState<'desc' | 'asc'>('desc');
   const [error, setError] = useState<string | null>(null);
   const [value, setValue] = useState<string>('');
-  const [order, setOrder] = useState<'desc' | 'asc'>('desc');
+
+  const [parent] = useAutoAnimate<HTMLDivElement>();
 
   const { data: session } = useSession();
-  const { mutate: fetchTodos, data, isError, isLoading } = trpc.useMutation(['todo.get']);
+  const {
+    mutate: fetchTodos,
+    isError,
+    isLoading,
+  } = trpc.useMutation(['todo.get'], {
+    onSuccess: (data) => setTodos(data),
+  });
 
   const { mutate: createTodo } = trpc.useMutation(['todo.create'], {
-    onSettled() {
-      fetchTodos({ order });
-    },
+    onSettled: () => fetchTodos({ order }),
   });
 
   const { mutate: deleteTodo } = trpc.useMutation(['todo.delete'], {
-    onSettled() {
-      fetchTodos({ order });
-    },
+    onSettled: () => fetchTodos({ order }),
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -81,7 +88,7 @@ const Content: React.FC = () => {
 
       <main className="mt-8 content">
         {isError && <Error />}
-        {isLoading && <Loader className="mx-auto my-4" />}
+        {!todos && isLoading && <Loader className="mx-auto my-4" />}
 
         <div className="flex flex-col max-w-2xl gap-4 mx-auto mb-4">
           <div className="flex items-center justify-between">
@@ -96,9 +103,9 @@ const Content: React.FC = () => {
               onChange={(event) => setOrder(event.target.value as 'desc' | 'asc')}
             />
           </div>
-          <div className="flex flex-col gap-4 max-h-[60vh] overflow-auto">
-            {data &&
-              data.map(({ id, body }) => (
+          <div className="flex flex-col gap-4 max-h-[60vh] overflow-auto" ref={parent}>
+            {todos &&
+              todos.map(({ id, body }) => (
                 <div
                   key={id}
                   className="flex items-center justify-between gap-2 px-6 py-4 rounded bg-neutral-800"
