@@ -17,12 +17,11 @@ const validate = (value: string): string | null => {
 };
 
 const Content: React.FC = () => {
+  const [parent] = useAutoAnimate<HTMLDivElement>();
   const [todos, setTodos] = useState<Todo[] | null>(null);
   const [order, setOrder] = useState<'desc' | 'asc'>('desc');
   const [error, setError] = useState<string | null>(null);
   const [value, setValue] = useState<string>('');
-
-  const [parent] = useAutoAnimate<HTMLDivElement>();
 
   const { data: session } = useSession();
   const {
