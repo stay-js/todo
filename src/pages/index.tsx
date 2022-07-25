@@ -4,7 +4,7 @@ import Head from 'next/head';
 import { SignIn, Content } from '../components/LandingPage';
 
 const LandingPage: NextPage = () => {
-  const { data } = useSession();
+  const { data: session } = useSession();
 
   return (
     <>
@@ -22,8 +22,8 @@ const LandingPage: NextPage = () => {
         <meta name="twitter:description" content="Todo App with GitHub authentication." />
       </Head>
 
-      {!data && <SignIn />}
-      {data && <Content />}
+      {!session && <SignIn />}
+      {session && <Content />}
     </>
   );
 };

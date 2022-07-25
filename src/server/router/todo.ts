@@ -4,7 +4,7 @@ import { createRouter } from './context';
 
 const todoRouter = createRouter()
   .middleware(async ({ ctx, next }) => {
-    if (!ctx.session) throw new TRPCError({ code: 'UNAUTHORIZED' });
+    if (!ctx.session || !ctx.session.user?.id) throw new TRPCError({ code: 'UNAUTHORIZED' });
 
     return next();
   })
@@ -12,9 +12,7 @@ const todoRouter = createRouter()
     input: z.object({
       order: z.enum(['desc', 'asc']),
     }),
-    async resolve({ ctx, input }) {
-      const { order } = input;
-
+    async resolve({ ctx, input: { order } }) {
       try {
         const todos = await ctx.prisma.todo.findMany({
           where: { userId: ctx.session?.user?.id },
@@ -31,9 +29,7 @@ const todoRouter = createRouter()
     input: z.object({
       body: z.string().min(0).max(200),
     }),
-    async resolve({ ctx, input }) {
-      const { body } = input;
-
+    async resolve({ ctx, input: { body } }) {
       try {
         const todo = await ctx.prisma.user.update({
           where: { id: ctx.session?.user?.id },
@@ -50,9 +46,7 @@ const todoRouter = createRouter()
     input: z.object({
       id: z.string(),
     }),
-    async resolve({ ctx, input }) {
-      const { id } = input;
-
+    async resolve({ ctx, input: { id } }) {
       try {
         const deletedTodo = await ctx.prisma.todo.delete({ where: { id } });
         return deletedTodo;
