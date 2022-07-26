@@ -12,7 +12,7 @@ const todoRouter = createRouter()
     input: z.object({
       order: z.enum(['desc', 'asc']),
     }),
-    async resolve({ ctx, input: { order } }) {
+    resolve: async ({ ctx, input: { order } }) => {
       try {
         const todos = await ctx.prisma.todo.findMany({
           where: { userId: ctx.session?.user?.id },
@@ -29,7 +29,7 @@ const todoRouter = createRouter()
     input: z.object({
       body: z.string().min(0).max(200),
     }),
-    async resolve({ ctx, input: { body } }) {
+    resolve: async ({ ctx, input: { body } }) => {
       try {
         const todo = await ctx.prisma.user.update({
           where: { id: ctx.session?.user?.id },
@@ -46,7 +46,7 @@ const todoRouter = createRouter()
     input: z.object({
       id: z.string(),
     }),
-    async resolve({ ctx, input: { id } }) {
+    resolve: async ({ ctx, input: { id } }) => {
       try {
         const deletedTodo = await ctx.prisma.todo.delete({ where: { id } });
         return deletedTodo;
