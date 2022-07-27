@@ -6,7 +6,12 @@ const todoRouter = createRouter()
   .middleware(async ({ ctx, next }) => {
     if (!ctx.session || !ctx.session.user?.id) throw new TRPCError({ code: 'UNAUTHORIZED' });
 
-    return next();
+    return next({
+      ctx: {
+        ...ctx,
+        session: { ...ctx.session, user: ctx.session.user },
+      },
+    });
   })
   .mutation('get', {
     input: z.object({
@@ -15,7 +20,7 @@ const todoRouter = createRouter()
     resolve: async ({ ctx, input: { order } }) => {
       try {
         const todos = await ctx.prisma.todo.findMany({
-          where: { userId: ctx.session?.user?.id },
+          where: { userId: ctx.session.user.id },
           orderBy: { createdAt: order },
         });
         return todos;
@@ -32,7 +37,7 @@ const todoRouter = createRouter()
     resolve: async ({ ctx, input: { body } }) => {
       try {
         const todo = await ctx.prisma.user.update({
-          where: { id: ctx.session?.user?.id },
+          where: { id: ctx.session.user.id },
           data: { Todo: { create: { body } } },
         });
         return todo;
