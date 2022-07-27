@@ -6,7 +6,7 @@ import { SessionProvider } from 'next-auth/react';
 import Head from 'next/head';
 import superjson from 'superjson';
 import Footer from '../components/Footer';
-import { env } from '../env/client-env.mjs';
+import { env } from '../env/client.mjs';
 import '../styles/globals.css';
 
 const App: AppType = ({ Component, pageProps: { session, ...pageProps } }) => (

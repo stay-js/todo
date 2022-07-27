@@ -1,7 +1,7 @@
 // @ts-check
 import { z } from 'zod';
 
-export const serverEnvSchema = z.object({
+export const serverSchema = z.object({
   DATABASE_URL: z.string().url(),
   NEXTAUTH_SECRET: z.string(),
   NEXTAUTH_URL: z.string().url(),
@@ -10,7 +10,7 @@ export const serverEnvSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']),
 });
 
-export const clientEnvSchema = z.object({
+export const clientSchema = z.object({
   NEXT_PUBLIC_VERCEL_URL: z.string(),
 });
 
