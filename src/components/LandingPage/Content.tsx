@@ -59,7 +59,7 @@ const Content: React.FC = () => {
   return (
     <>
       <div className="relative flex items-center py-4 after:absolute after:block after:bg-neutral-700 after:w-full after:h-[1px] after:bottom-0 after:left-0">
-        <div className="flex items-center justify-between w-full content">
+        <div className="flex items-center justify-between w-full px-6">
           <div className="flex items-center gap-4">
             {session?.user?.image && (
               <Image
@@ -85,7 +85,7 @@ const Content: React.FC = () => {
         </div>
       </div>
 
-      <main className="mt-8 content">
+      <main className="mt-8 max-w-[90%] mx-auto">
         {isError && <Error />}
         {!todos && isLoading && <Loader className="mx-auto my-4" />}
 
@@ -102,6 +102,7 @@ const Content: React.FC = () => {
               onChange={(event) => setOrder(event.target.value as 'desc' | 'asc')}
             />
           </div>
+
           <div className="flex flex-col gap-4 max-h-[60vh] overflow-auto" ref={parent}>
             {todos &&
               todos.map(({ id, body }) => (
