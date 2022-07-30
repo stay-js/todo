@@ -2,7 +2,7 @@ import type { Todo } from '@prisma/client';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { Loader, TextInput, NativeSelect } from '@mantine/core';
 import { signOut, useSession } from 'next-auth/react';
-import Image from 'next/image';
+import Image from 'next/future/image';
 import { useEffect, useState } from 'react';
 import trpc from '../../utils/trpc';
 import Error from '../Error';
@@ -63,11 +63,11 @@ const Content: React.FC = () => {
           <div className="flex items-center gap-4">
             {session?.user?.image && (
               <Image
+                className="rounded-full select-none"
                 src={session.user?.image}
                 alt="GitHub Profile Picture"
                 width={48}
                 height={48}
-                className="rounded-full select-none"
               />
             )}
             <p className="text-lg">

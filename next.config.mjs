@@ -16,4 +16,9 @@ export default defineNextConfig({
   images: {
     domains: ['avatars.githubusercontent.com'],
   },
+  experimental: {
+    images: {
+      allowFutureImage: true,
+    },
+  },
 });
