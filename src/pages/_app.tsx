@@ -7,8 +7,6 @@ import Head from 'next/head';
 import superjson from 'superjson';
 import Footer from '@components/Footer';
 import { env } from '@env/client.mjs';
-
-/* eslint-disable-next-line */
 import '@styles/globals.css';
 
 const App: AppType = ({ Component, pageProps: { session, ...pageProps } }) => (
