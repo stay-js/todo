@@ -20,6 +20,7 @@
       "@env/*": ["src/env/*"],
       "@server/*": ["src/server/*"],
       "@styles/*": ["src/styles/*"],
+      "@types/*": ["src/types/*"],
       "@utils/*": ["src/utils/*"]
     }
   },
