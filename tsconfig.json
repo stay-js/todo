@@ -14,12 +14,13 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "baseUrl": ".",
     "paths": {
-      "@components/*": ["./src/components/*"],
-      "@env/*": ["./src/env/*"],
-      "@server/*": ["./src/server/*"],
-      "@styles/*": ["./src/styles/*"],
-      "@utils/*": ["./src/utils/*"]
+      "@components/*": ["src/components/*"],
+      "@env/*": ["src/env/*"],
+      "@server/*": ["src/server/*"],
+      "@styles/*": ["src/styles/*"],
+      "@utils/*": ["src/utils/*"]
     }
   },
   "include": ["next-env.d.ts", "next-auth.d.ts", "**/*.ts", "**/*.tsx"],
