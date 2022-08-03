@@ -1,10 +1,10 @@
 import type { Todo } from '@prisma/client';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { Loader, TextInput, NativeSelect } from '@mantine/core';
+import trpc from '@utils/trpc';
 import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/future/image';
 import { useEffect, useState } from 'react';
-import trpc from '../../utils/trpc';
 import Error from '../Error';
 
 const validate = (value: string): string | null => {

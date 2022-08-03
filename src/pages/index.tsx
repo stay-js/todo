@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
+import { SignIn, Content } from '@components/LandingPage';
 import { useSession } from 'next-auth/react';
 import Head from 'next/head';
-import { SignIn, Content } from '../components/LandingPage';
 
 const LandingPage: NextPage = () => {
   const { data: session } = useSession();

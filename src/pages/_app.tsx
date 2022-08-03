@@ -1,13 +1,15 @@
-import type { AppRouter } from '../server/router';
+import type { AppRouter } from '@server/router';
 import type { AppType } from 'next/dist/shared/lib/utils';
+import Footer from '@components/Footer';
+import { env } from '@env/client.mjs';
 import { MantineProvider } from '@mantine/core';
 import { withTRPC } from '@trpc/next';
 import { SessionProvider } from 'next-auth/react';
 import Head from 'next/head';
 import superjson from 'superjson';
-import Footer from '../components/Footer';
-import { env } from '../env/client.mjs';
-import '../styles/globals.css';
+
+/* eslint-disable-next-line */
+import '@styles/globals.css';
 
 const App: AppType = ({ Component, pageProps: { session, ...pageProps } }) => (
   <>
