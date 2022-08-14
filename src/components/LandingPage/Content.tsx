@@ -64,7 +64,7 @@ const Content: React.FC = () => {
             {session?.user?.image && (
               <Image
                 className="rounded-full select-none"
-                src={session.user?.image}
+                src={session.user.image}
                 alt="GitHub Profile Picture"
                 width={48}
                 height={48}
@@ -86,9 +86,6 @@ const Content: React.FC = () => {
       </div>
 
       <main className="mt-8 max-w-[90%] mx-auto">
-        {isError && <Error />}
-        {!todos && isLoading && <Loader color="green" className="mx-auto my-4" />}
-
         <div className="flex flex-col max-w-2xl gap-4 mx-auto mb-4">
           <div className="flex items-center justify-between">
             <p className="font-bold">Order Todos:</p>
@@ -103,25 +100,26 @@ const Content: React.FC = () => {
             />
           </div>
 
-          <div className="flex flex-col gap-4 max-h-[60vh] overflow-auto" ref={parent}>
-            {todos &&
-              todos.map(({ id, body }) => (
-                <div
-                  key={id}
-                  className="flex items-center justify-between gap-2 px-6 py-4 rounded bg-neutral-800"
-                >
-                  {body}
-                  <button
-                    type="button"
-                    className="px-2 py-1 text-white transition-all bg-red-500 border-2 border-red-500 border-solid rounded whitespace-nowrap hover:text-red-500 hover:bg-transparent"
-                    onClick={() => deleteTodo({ id })}
-                  >
-                    Delete <span className="hidden sm:inline-block">Todo</span>
-                  </button>
-                </div>
-              ))}
-          </div>
+          {isError && <Error />}
+          {!todos && isLoading && <Loader color="green" className="mx-auto my-4" />}
 
+          <div className="flex flex-col gap-4 max-h-[60vh] overflow-auto" ref={parent}>
+            {todos?.map(({ id, body }) => (
+              <div
+                key={id}
+                className="flex items-center justify-between gap-2 px-6 py-4 rounded bg-neutral-800"
+              >
+                {body}
+                <button
+                  type="button"
+                  className="px-2 py-1 text-white transition-all bg-red-500 border-2 border-red-500 border-solid rounded whitespace-nowrap hover:text-red-500 hover:bg-transparent"
+                  onClick={() => deleteTodo({ id })}
+                >
+                  Delete <span className="hidden sm:inline-block">Todo</span>
+                </button>
+              </div>
+            ))}
+          </div>
           <form onSubmit={handleSubmit} className="flex justify-between w-full gap-2">
             <TextInput
               className="w-full"
