@@ -1242,50 +1242,50 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@mantine/core@^5.1.5":
-  version "5.1.5"
-  resolved "https://registry.yarnpkg.com/@mantine/core/-/core-5.1.5.tgz#6d428c80ce878cf72f8471cc730413d940abb03a"
-  integrity sha512-3WHNn/wW89yFkYb7VqNr+1DFq95unRhV/ggnoKSlVvXX0+4T63fIvCY5kGsuHXConeyupWxTBhQAadH0rerwzQ==
+"@mantine/core@^5.1.6":
+  version "5.1.6"
+  resolved "https://registry.yarnpkg.com/@mantine/core/-/core-5.1.6.tgz#98c984bf08ceeb8684a8dc7146034c85e35de9f7"
+  integrity sha512-ZG/ccTc+LcxcUahxMu4m3hOkAss8LetETFbZ5zsDotJTvij2lzMzNcuPebLeyxNt714VEWIXNzIUotNtGXDSGg==
   dependencies:
     "@floating-ui/react-dom-interactions" "0.6.6"
-    "@mantine/styles" "5.1.5"
-    "@mantine/utils" "5.1.5"
+    "@mantine/styles" "5.1.6"
+    "@mantine/utils" "5.1.6"
     "@radix-ui/react-scroll-area" "1.0.0"
     react-textarea-autosize "8.3.4"
 
-"@mantine/hooks@^5.1.5":
-  version "5.1.5"
-  resolved "https://registry.yarnpkg.com/@mantine/hooks/-/hooks-5.1.5.tgz#b6fae9ef96bcd4acb16419782293b80a5f5be0f6"
-  integrity sha512-R2/NaGoRTOCWj9jLA0lNp+tuCaKF64gpjqYgxlDXp5VAyO1R0zTfMK8OSWJLcr2OTzVzjmakOwF2OZg8Am/r0w==
+"@mantine/hooks@^5.1.6":
+  version "5.1.6"
+  resolved "https://registry.yarnpkg.com/@mantine/hooks/-/hooks-5.1.6.tgz#07d4850d3444526268a749c965ce64eea8cb7583"
+  integrity sha512-wD+Cx9W00YQchudIvkiEy52e/UCB0EhTkJs2fr2JbTlfKCWfWSilE/CPbLz6NWmK58bbyB/qjdKUDwXV6qyasw==
 
-"@mantine/next@^5.1.5":
-  version "5.1.5"
-  resolved "https://registry.yarnpkg.com/@mantine/next/-/next-5.1.5.tgz#2205e7cd7eb0e61f9de78f423d6ec4c747e46bfd"
-  integrity sha512-tD/R50MqlOI3UKIpOkcUBSBWk+wykezbAn7M9rF1l+mDovxEpFv4gBL/WMooOF29Hw0fLUY3aVGLSnVSpQ8tRw==
+"@mantine/next@^5.1.6":
+  version "5.1.6"
+  resolved "https://registry.yarnpkg.com/@mantine/next/-/next-5.1.6.tgz#fecc2090fec65bd133b58ed07cef4154cb634e47"
+  integrity sha512-Uf9dPssBCUaErI2kIhN3bDLjCWA9M2L6/JSv+4ik+hyKgVIYNvdWIwPZQTr5C9o5kANAl30OovvQMNbR5NPK5A==
   dependencies:
-    "@mantine/ssr" "5.1.5"
-    "@mantine/styles" "5.1.5"
+    "@mantine/ssr" "5.1.6"
+    "@mantine/styles" "5.1.6"
 
-"@mantine/ssr@5.1.5":
-  version "5.1.5"
-  resolved "https://registry.yarnpkg.com/@mantine/ssr/-/ssr-5.1.5.tgz#49667efd5335643ebf56434ad672d50ee336da6c"
-  integrity sha512-QAeBJR88IC/8jc+I8dJcCf2r+tLYlzoZcxYG/dpmULCjQkeabQ5r6mWlDYI5qlyTcr/b/qT54b2q5UcLBI/Atg==
+"@mantine/ssr@5.1.6":
+  version "5.1.6"
+  resolved "https://registry.yarnpkg.com/@mantine/ssr/-/ssr-5.1.6.tgz#573e45b199357c57be837b6edc394500268d188a"
+  integrity sha512-MXCUvq+/kcgSWxbcr73Gx7dum6B6Nrp3zT/MpLfWUixZPtsXOMGgPnssdvTvd2GTs8kJWnEGK0XyNwLf3kom2A==
   dependencies:
-    "@mantine/styles" "5.1.5"
+    "@mantine/styles" "5.1.6"
     html-react-parser "1.4.12"
 
-"@mantine/styles@5.1.5":
-  version "5.1.5"
-  resolved "https://registry.yarnpkg.com/@mantine/styles/-/styles-5.1.5.tgz#63495aa2803a28bb48888cb152a56d2b5c214369"
-  integrity sha512-kW7fWw+ZCzCPFgIc0MgVLCg73ySEewgO9q/dBxU+ZyU+7QN9h8PHQNV1XbgGQm1acFWfKDaM8eTJRdwXw0en1Q==
+"@mantine/styles@5.1.6":
+  version "5.1.6"
+  resolved "https://registry.yarnpkg.com/@mantine/styles/-/styles-5.1.6.tgz#cfb4a33d4c38ffb499d51cd0af35abd436ebe831"
+  integrity sha512-7d112DIHauP+X0JaVh0uzlpVndWqw/muaz77C5hLlA8yP7gVuRWOhEqJDuTnZzNtj/utIJJDAyVM2+DHFqtQtg==
   dependencies:
     clsx "1.1.1"
     csstype "3.0.9"
 
-"@mantine/utils@5.1.5":
-  version "5.1.5"
-  resolved "https://registry.yarnpkg.com/@mantine/utils/-/utils-5.1.5.tgz#416541d304538d2ce4c2c1e3ea494bfd1ec3dd6f"
-  integrity sha512-c8pJE/mM4dAdjLfQCmFC4V9VNF0rTpiS46nxBoUzGShHkr7NTLOfkzws3hYzYFNvJ2MvNMQu//QOXZrnrAPRTw==
+"@mantine/utils@5.1.6":
+  version "5.1.6"
+  resolved "https://registry.yarnpkg.com/@mantine/utils/-/utils-5.1.6.tgz#992cd1e8850467533aa88dc5fd933650674abf5e"
+  integrity sha512-y7va2keQ+TPwn2j668r889NhQWO0OhSvaxT5P8n2iBaTyPg+Xp5Jm2IE5UjI+OrZErrgmQq1sxbfg6v5vdK+0A==
 
 "@next-auth/prisma-adapter@^1.0.4":
   version "1.0.4"
@@ -1966,9 +1966,9 @@ camelcase-css@^2.0.1:
   integrity sha512-QOSvevhslijgYwRx6Rv7zKdMF8lbRmx+uQGx2+vDc+KI/eBnsy9kit5aj23AgGu3pa4t9AgwbnXWqS+iOY+2aA==
 
 caniuse-lite@^1.0.30001332, caniuse-lite@^1.0.30001370, caniuse-lite@^1.0.30001373:
-  version "1.0.30001375"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001375.tgz#8e73bc3d1a4c800beb39f3163bf0190d7e5d7672"
-  integrity sha512-kWIMkNzLYxSvnjy0hL8w1NOaWNr2rn39RTAVyIwcw8juu60bZDWiF1/loOYANzjtJmy6qPgNmn38ro5Pygagdw==
+  version "1.0.30001376"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001376.tgz#af2450833e5a06873fbb030a9556ca9461a2736d"
+  integrity sha512-I27WhtOQ3X3v3it9gNs/oTpoE5KpwmqKR5oKPA8M0G7uMXh9Ty81Q904HpKUrM30ei7zfcL5jE7AXefgbOfMig==
 
 chalk@^2.0.0:
   version "2.4.2"
@@ -2240,9 +2240,9 @@ duplexer2@^0.1.2:
     readable-stream "^2.0.2"
 
 electron-to-chromium@^1.4.202:
-  version "1.4.218"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.218.tgz#d6b817b5454499a92c85888b42dc2ad075e4493a"
-  integrity sha512-INDylKH//YIf2w67D+IjkfVnGVrZ/D94DAU/FPPm6T4jEPbEDQvo9r2wTj0ncFdtJH8+V8BggZTaN8Rzk5wkgw==
+  version "1.4.219"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.219.tgz#a7a672304b6aa4f376918d3f63a47f2c3906009a"
+  integrity sha512-zoQJsXOUw0ZA0YxbjkmzBumAJRtr6je5JySuL/bAoFs0DuLiLJ+5FzRF7/ZayihxR2QcewlRZVm5QZdUhwjOgA==
 
 emoji-regex@^9.2.2:
   version "9.2.2"
@@ -2517,10 +2517,10 @@ eslint-visitor-keys@^3.3.0:
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-3.3.0.tgz#f6480fa6b1f30efe2d1968aa8ac745b862469826"
   integrity sha512-mQ+suqKJVyeuwGYHAdjMFqjCyfl8+Ldnxuyp3ldiMBFKkvytrXUZWaiPCEav8qDHKty44bD+qV1IP4T+w+xXRA==
 
-eslint@^8.21.0:
-  version "8.21.0"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-8.21.0.tgz#1940a68d7e0573cef6f50037addee295ff9be9ef"
-  integrity sha512-/XJ1+Qurf1T9G2M5IHrsjp+xrGT73RZf23xA1z5wB1ZzzEAWSZKvRwhWxTFp1rvkvCfwcvAUNAP31bhKTTGfDA==
+eslint@^8.22.0:
+  version "8.22.0"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-8.22.0.tgz#78fcb044196dfa7eef30a9d65944f6f980402c48"
+  integrity sha512-ci4t0sz6vSRKdmkOGmprBo6fmI4PrphDFMy5JEq/fNS0gQkJM3rLmrqcp8ipMcdobH3KtUP40KniAE9W19S4wA==
   dependencies:
     "@eslint/eslintrc" "^1.3.0"
     "@humanwhocodes/config-array" "^0.10.4"
