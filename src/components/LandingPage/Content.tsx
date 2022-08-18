@@ -58,12 +58,12 @@ const Content: React.FC = () => {
 
   return (
     <>
-      <div className="relative flex items-center py-4 after:absolute after:block after:bg-neutral-700 after:w-full after:h-[1px] after:bottom-0 after:left-0">
-        <div className="flex items-center justify-between w-full px-6">
+      <div className="relative flex items-center py-4 after:absolute after:bottom-0 after:left-0 after:block after:h-[1px] after:w-full after:bg-neutral-700">
+        <div className="flex w-full items-center justify-between px-6">
           <div className="flex items-center gap-4">
             {session?.user?.image && (
               <Image
-                className="rounded-full select-none"
+                className="select-none rounded-full"
                 src={session.user.image}
                 alt="GitHub Profile Picture"
                 width={48}
@@ -77,7 +77,7 @@ const Content: React.FC = () => {
 
           <button
             type="button"
-            className="px-4 py-2 text-white transition-all bg-green-500 border-2 border-green-500 border-solid rounded hover:text-green-500 hover:bg-transparent"
+            className="rounded border-2 border-solid border-green-500 bg-green-500 px-4 py-2 text-white transition-all hover:bg-transparent hover:text-green-500"
             onClick={() => signOut()}
           >
             Sign Out
@@ -85,12 +85,12 @@ const Content: React.FC = () => {
         </div>
       </div>
 
-      <main className="mt-8 max-w-[90%] mx-auto">
-        <div className="flex flex-col max-w-2xl gap-4 mx-auto mb-4">
+      <main className="mx-auto mt-8 max-w-[90%]">
+        <div className="mx-auto mb-4 flex max-w-2xl flex-col gap-4">
           <div className="flex items-center justify-between">
             <p className="font-bold">Order Todos:</p>
             <NativeSelect
-              className="select-none w-fit"
+              className="w-fit select-none"
               data={[
                 { value: 'desc', label: 'Latest first' },
                 { value: 'asc', label: 'Oldest first' },
@@ -103,16 +103,16 @@ const Content: React.FC = () => {
           {isError && <Error />}
           {!todos && isLoading && <Loader color="green" className="mx-auto my-4" />}
 
-          <div className="flex flex-col gap-4 max-h-[60vh] overflow-auto" ref={parent}>
+          <div className="flex max-h-[60vh] flex-col gap-4 overflow-auto" ref={parent}>
             {todos?.map(({ id, body }) => (
               <div
                 key={id}
-                className="flex items-center justify-between gap-2 px-6 py-4 rounded bg-neutral-800"
+                className="flex items-center justify-between gap-2 rounded bg-neutral-800 px-6 py-4"
               >
                 {body}
                 <button
                   type="button"
-                  className="px-2 py-1 text-white transition-all bg-red-500 border-2 border-red-500 border-solid rounded whitespace-nowrap hover:text-red-500 hover:bg-transparent"
+                  className="whitespace-nowrap rounded border-2 border-solid border-red-500 bg-red-500 px-2 py-1 text-white transition-all hover:bg-transparent hover:text-red-500"
                   onClick={() => deleteTodo({ id })}
                 >
                   Delete <span className="hidden sm:inline-block">Todo</span>
@@ -120,7 +120,7 @@ const Content: React.FC = () => {
               </div>
             ))}
           </div>
-          <form onSubmit={handleSubmit} className="flex justify-between w-full gap-2">
+          <form onSubmit={handleSubmit} className="flex w-full justify-between gap-2">
             <TextInput
               className="w-full"
               placeholder="Create new todo:"
@@ -131,7 +131,7 @@ const Content: React.FC = () => {
             />
 
             <input
-              className="px-4 text-sm font-bold text-white transition-colors duration-300 bg-green-500 rounded shadow-sm cursor-pointer h-9 hover:bg-neutral-700 focus:bg-neutral-700"
+              className="h-9 cursor-pointer rounded bg-green-500 px-4 text-sm font-bold text-white shadow-sm transition-colors duration-300 hover:bg-neutral-700 focus:bg-neutral-700"
               type="submit"
               value="Create"
             />
