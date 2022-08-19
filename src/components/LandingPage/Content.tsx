@@ -151,6 +151,7 @@ const Content: React.FC = () => {
                 value={value}
                 onChange={(event) => setValue(event.currentTarget.value)}
               />
+
               {error && <p className="mb-0 text-xs text-red-500">{error}</p>}
             </div>
 
