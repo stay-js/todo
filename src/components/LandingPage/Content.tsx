@@ -152,7 +152,7 @@ const Content: React.FC = () => {
                 onChange={(event) => setValue(event.currentTarget.value)}
               />
 
-              {error && <p className="mb-0 text-xs text-red-500">{error}</p>}
+              {error && <p className="text-xs text-red-500">{error}</p>}
             </div>
 
             <input
