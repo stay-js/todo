@@ -1,9 +1,9 @@
 import type { Todo } from '@prisma/client';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { Loader, TextInput, NativeSelect } from '@mantine/core';
 import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/future/image';
 import { useEffect, useState } from 'react';
+import { TbSelector } from 'react-icons/tb';
 import trpc from '@utils/trpc';
 import Error from '../Error';
 
@@ -89,19 +89,38 @@ const Content: React.FC = () => {
         <div className="mx-auto mb-4 flex max-w-2xl flex-col gap-4">
           <div className="flex items-center justify-between">
             <p className="font-bold">Order Todos:</p>
-            <NativeSelect
-              className="w-fit select-none"
-              data={[
-                { value: 'desc', label: 'Latest first' },
-                { value: 'asc', label: 'Oldest first' },
-              ]}
-              value={order}
-              onChange={(event) => setOrder(event.target.value as 'desc' | 'asc')}
-            />
+            <div className="relative flex items-center rounded border border-[#373A40] bg-[#25262b] text-sm text-neutral-300">
+              <select
+                className="h-10 w-full appearance-none bg-transparent pl-2 pr-8"
+                value={order}
+                onChange={(event) => setOrder(event.target.value as 'desc' | 'asc')}
+              >
+                <option value="desc">Latest first</option>
+                <option value="asc">Oldest first</option>
+              </select>
+              <TbSelector
+                size={16}
+                className="pointer-events-none absolute right-2 text-neutral-300"
+              />
+            </div>
           </div>
 
           {isError && <Error />}
-          {!todos && isLoading && <Loader color="green" className="mx-auto my-4" />}
+          {!todos && isLoading && (
+            <svg className="mx-auto my-4 h-8 w-8 animate-spin" fill="none" viewBox="0 0 24 24">
+              <circle
+                className="stroke-green-500 opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                strokeWidth="4"
+              />
+              <path
+                className="fill-green-500"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              />
+            </svg>
+          )}
 
           <div className="flex max-h-[60vh] flex-col gap-4 overflow-auto" ref={parent}>
             {todos?.map(({ id, body }) => (
@@ -121,17 +140,20 @@ const Content: React.FC = () => {
             ))}
           </div>
           <form onSubmit={handleSubmit} className="flex w-full justify-between gap-2">
-            <TextInput
-              className="w-full"
-              placeholder="Create new todo:"
-              id="body"
-              value={value}
-              onChange={(event) => setValue(event.currentTarget.value)}
-              error={error}
-            />
+            <div className="flex w-full flex-col gap-1">
+              <input
+                type="text"
+                className="h-10 w-full rounded border border-[#373A40] bg-[#25262b] px-2 text-sm text-neutral-400"
+                placeholder="Create new todo:"
+                id="body"
+                value={value}
+                onChange={(event) => setValue(event.currentTarget.value)}
+              />
+              {error && <p className="mb-0 text-xs text-red-500">{error}</p>}
+            </div>
 
             <input
-              className="h-9 cursor-pointer rounded bg-green-500 px-4 text-sm font-bold text-white shadow-sm transition-colors duration-300 hover:bg-neutral-700 focus:bg-neutral-700"
+              className="h-10 cursor-pointer rounded bg-green-500 px-4 text-sm font-bold text-white shadow-sm transition-colors duration-300 hover:bg-neutral-700 focus:bg-neutral-700"
               type="submit"
               value="Create"
             />

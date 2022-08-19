@@ -1,6 +1,5 @@
 import type { AppRouter } from '@server/router';
 import type { AppType } from 'next/dist/shared/lib/utils';
-import { MantineProvider } from '@mantine/core';
 import { withTRPC } from '@trpc/next';
 import { SessionProvider } from 'next-auth/react';
 import Head from 'next/head';
@@ -32,19 +31,15 @@ const App: AppType = ({ Component, pageProps: { session, ...pageProps } }) => (
       <meta name="rating" content="general" />
     </Head>
 
-    <div className="flex min-h-screen flex-col justify-between">
-      <SessionProvider session={session}>
-        <MantineProvider
-          theme={{ primaryColor: 'green', colorScheme: 'dark', fontFamily: 'Roboto' }}
-        >
-          <div>
-            <Component {...pageProps} />
-          </div>
+    <SessionProvider session={session}>
+      <div className="flex min-h-screen flex-col justify-between">
+        <div>
+          <Component {...pageProps} />
+        </div>
 
-          <Footer />
-        </MantineProvider>
-      </SessionProvider>
-    </div>
+        <Footer />
+      </div>
+    </SessionProvider>
   </>
 );
 
