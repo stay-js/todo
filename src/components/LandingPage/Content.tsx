@@ -71,7 +71,7 @@ const Content: React.FC = () => {
               />
             )}
             <p className="text-lg">
-              Hi, <span className="font-semibold">{session?.user?.name}!</span>
+              Hi, <span className="font-bold">{session?.user?.name}!</span>
             </p>
           </div>
 
