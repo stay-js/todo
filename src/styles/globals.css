@@ -11,7 +11,7 @@ html {
 }
 
 body {
-  @apply overflow-x-hidden bg-neutral-900 font-sans text-white;
+  @apply overflow-x-hidden bg-neutral-900 text-white;
 }
 
 .link {
