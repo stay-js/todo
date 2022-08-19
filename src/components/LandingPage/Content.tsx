@@ -98,6 +98,7 @@ const Content: React.FC = () => {
                 <option value="desc">Latest first</option>
                 <option value="asc">Oldest first</option>
               </select>
+
               <TbSelector
                 size={16}
                 className="pointer-events-none absolute right-2 text-neutral-300"
@@ -139,6 +140,7 @@ const Content: React.FC = () => {
               </div>
             ))}
           </div>
+
           <form onSubmit={handleSubmit} className="flex w-full justify-between gap-2">
             <div className="flex w-full flex-col gap-1">
               <input
