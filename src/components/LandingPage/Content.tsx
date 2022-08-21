@@ -2,10 +2,10 @@ import type { Todo } from '@prisma/client';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/future/image';
-import { useEffect, useState } from 'react';
-import { TbSelector } from 'react-icons/tb';
+import { useEffect, useState, Fragment } from 'react';
+import { TbAlertCircle, TbSelector } from 'react-icons/tb';
 import trpc from '@utils/trpc';
-import Error from '../Error';
+import { Dialog, Transition } from '@headlessui/react';
 
 const validate = (value: string): string | null => {
   let error: string | null = null;
@@ -22,6 +22,8 @@ const Content: React.FC = () => {
   const [order, setOrder] = useState<'desc' | 'asc'>('desc');
   const [error, setError] = useState<string | null>(null);
   const [value, setValue] = useState<string>('');
+  const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
+  const [todoToDelete, setTodoToDelete] = useState<string | null>(null);
 
   const { data: session } = useSession();
   const {
@@ -52,12 +54,82 @@ const Content: React.FC = () => {
     }
   };
 
+  const handleOpenPopup = (id: string) => {
+    setTodoToDelete(id);
+    setIsPopupOpen(true);
+  };
+
+  const handleDelete = (id: string) => {
+    deleteTodo({ id });
+    setIsPopupOpen(false);
+    setTodoToDelete(null);
+  };
+
   useEffect(() => {
     fetchTodos({ order });
   }, [fetchTodos, order]);
 
   return (
     <>
+      <Transition appear show={isPopupOpen} as={Fragment}>
+        <Dialog as="div" className="relative z-50" onClose={() => setIsPopupOpen(false)}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-50" />
+          </Transition.Child>
+
+          <div className="fixed inset-0">
+            <div className="grid min-h-full place-items-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="flex w-full max-w-[90%] flex-col gap-4 rounded-2xl bg-neutral-900 p-6 shadow-xl sm:max-w-md">
+                  <div className="flex flex-col gap-2">
+                    <Dialog.Title className="text-lg font-bold">Delete Todo</Dialog.Title>
+
+                    <Dialog.Description className="mb-0 text-sm text-neutral-200">
+                      Are you sure you want to delete this Todo? This action <b>cannot be undone</b>
+                      . This will <b>permanently</b> delete the selected Todo.
+                    </Dialog.Description>
+                  </div>
+
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      className="rounded border-2 border-green-500 bg-green-500 py-2 px-4 text-sm font-bold text-white transition-all hover:bg-transparent hover:text-green-500"
+                      onClick={() => setIsPopupOpen(false)}
+                    >
+                      Cancel
+                    </button>
+
+                    <button
+                      type="button"
+                      className="rounded border-2 border-red-500 bg-red-500 py-2 px-4 text-sm font-bold text-white transition-all hover:bg-transparent hover:text-red-500"
+                      onClick={() => handleDelete(todoToDelete!)}
+                    >
+                      Delete <span className="hidden sm:inline-block">Todo</span>
+                    </button>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
+
       <div className="relative flex items-center py-4 after:absolute after:bottom-0 after:left-0 after:block after:h-[1px] after:w-full after:bg-neutral-700">
         <div className="flex w-full items-center justify-between px-6">
           <div className="flex items-center gap-4">
@@ -77,7 +149,7 @@ const Content: React.FC = () => {
 
           <button
             type="button"
-            className="rounded border-2 border-solid border-green-500 bg-green-500 px-4 py-2 text-white transition-all hover:bg-transparent hover:text-green-500"
+            className="rounded border-2 border-green-500 bg-green-500 py-2 px-4 text-sm font-bold text-white transition-all hover:bg-transparent hover:text-green-500"
             onClick={() => signOut()}
           >
             Sign Out
@@ -106,7 +178,12 @@ const Content: React.FC = () => {
             </div>
           </div>
 
-          {isError && <Error />}
+          {isError && (
+            <div className="my-4 flex flex-col items-center gap-2">
+              <TbAlertCircle size={48} color="red" className="animate-bounce" />
+              Something went wrong... try again later!
+            </div>
+          )}
           {!todos && isLoading && (
             <svg className="mx-auto my-4 h-8 w-8 animate-spin" fill="none" viewBox="0 0 24 24">
               <circle
@@ -132,8 +209,8 @@ const Content: React.FC = () => {
                 {body}
                 <button
                   type="button"
-                  className="whitespace-nowrap rounded border-2 border-solid border-red-500 bg-red-500 px-2 py-1 text-white transition-all hover:bg-transparent hover:text-red-500"
-                  onClick={() => deleteTodo({ id })}
+                  className="whitespace-nowrap rounded border-2 border-red-500 bg-red-500 px-4 py-2 text-sm font-bold text-white transition-all hover:bg-transparent hover:text-red-500"
+                  onClick={() => handleOpenPopup(id)}
                 >
                   Delete <span className="hidden sm:inline-block">Todo</span>
                 </button>
@@ -156,7 +233,7 @@ const Content: React.FC = () => {
             </div>
 
             <input
-              className="h-10 cursor-pointer rounded bg-green-500 px-4 text-sm font-bold text-white shadow-sm transition-colors duration-300 hover:bg-neutral-700 focus:bg-neutral-700"
+              className="h-10 rounded border-2 border-green-500 bg-green-500 px-4 text-sm font-bold text-white transition-all hover:bg-transparent hover:text-green-500"
               type="submit"
               value="Create"
             />
