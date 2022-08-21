@@ -98,7 +98,9 @@ const Content: React.FC = () => {
               >
                 <Dialog.Panel className="flex w-full max-w-[90%] flex-col gap-4 rounded-2xl bg-neutral-900 p-6 shadow-xl sm:max-w-md">
                   <div className="flex flex-col gap-2">
-                    <Dialog.Title className="text-lg font-bold">Delete Todo</Dialog.Title>
+                    <Dialog.Title className="text-lg font-bold text-neutral-50">
+                      Delete Todo
+                    </Dialog.Title>
 
                     <Dialog.Description className="mb-0 text-sm text-neutral-200">
                       Are you sure you want to delete this Todo? This action <b>cannot be undone</b>
