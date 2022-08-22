@@ -12,7 +12,7 @@ const App: AppType = ({ Component, pageProps: { session, ...pageProps } }) => (
   <>
     <Head>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <link rel="icon" href="/favicon.ico" />
+      <link rel="icon" href="/favicon.svg" />
 
       <meta name="author" content="stay" />
 
