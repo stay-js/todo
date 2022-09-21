@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://todo.znagy.hu
+
+# Sitemaps
+Sitemap: https://todo.znagy.hu/sitemap.xml
