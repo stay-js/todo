@@ -26,7 +26,6 @@ const App: AppType = ({ Component, pageProps: { session, ...pageProps } }) => (
       <meta property="twitter:domain" content="todo.znagy.hu" />
 
       <meta name="robots" content="index, follow" />
-      <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
       <meta name="language" content="English" />
       <meta name="rating" content="general" />
     </Head>
