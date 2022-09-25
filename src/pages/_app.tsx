@@ -1,4 +1,5 @@
 import type { AppRouter } from '@server/router';
+import type { Session } from 'next-auth';
 import type { AppType } from 'next/dist/shared/lib/utils';
 import { withTRPC } from '@trpc/next';
 import { SessionProvider } from 'next-auth/react';
@@ -8,7 +9,10 @@ import Footer from '@components/Footer';
 import { env } from '@env/client.mjs';
 import '@styles/globals.css';
 
-const App: AppType = ({ Component, pageProps: { session, ...pageProps } }) => (
+const App: AppType<{ session: Session | null }> = ({
+  Component,
+  pageProps: { session, ...pageProps },
+}) => (
   <>
     <Head>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
