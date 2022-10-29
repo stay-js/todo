@@ -2,7 +2,7 @@ import type { Todo } from '@prisma/client';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { Dialog, Transition } from '@headlessui/react';
 import { signOut, useSession } from 'next-auth/react';
-import Image from 'next/future/image';
+import Image from 'next/image';
 import { useEffect, useState, Fragment } from 'react';
 import { TbAlertCircle, TbSelector } from 'react-icons/tb';
 import trpc from '@utils/trpc';
