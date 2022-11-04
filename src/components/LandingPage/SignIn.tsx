@@ -3,12 +3,12 @@ import { FaGithub } from 'react-icons/fa';
 
 const SignIn: React.FC = () => (
   <div
-    className="flex w-screen flex-col items-center justify-center gap-4"
+    className="mx-auto flex max-w-[90%] flex-col items-center justify-center gap-4"
     style={{
       height: 'calc(100vh - 4.5rem)',
     }}
   >
-    <h1 className="mx-4 text-center text-2xl font-bold">
+    <h1 className="text-center text-2xl font-bold">
       In order to use the application please sign in...
     </h1>
 
