@@ -93,7 +93,7 @@ const Content: React.FC = () => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="flex w-full max-w-[90%] flex-col gap-4 rounded-2xl bg-neutral-900 p-6 shadow-xl sm:max-w-md">
+              <Dialog.Panel className="flex w-11/12 max-w-md flex-col gap-4 rounded-2xl bg-neutral-900 p-6 shadow-xl">
                 <div className="flex flex-col gap-2">
                   <Dialog.Title className="text-lg font-bold text-neutral-50">
                     Delete Todo
@@ -154,7 +154,7 @@ const Content: React.FC = () => {
         </button>
       </div>
 
-      <main className="mx-auto flex max-w-2xl flex-col gap-4 py-4">
+      <main className="mx-auto flex w-11/12 max-w-2xl flex-col gap-4 py-4">
         <div className="flex items-center justify-between">
           <p className="font-bold">Order Todos:</p>
           <div className="relative flex items-center rounded border border-[#373A40] bg-[#25262b] text-sm text-neutral-300">
