@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
-import { useSession } from 'next-auth/react';
 import Head from 'next/head';
+import { useSession } from 'next-auth/react';
 import { SignIn, Content } from '@components/LandingPage';
 
 const Home: NextPage = () => {
