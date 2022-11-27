@@ -24,19 +24,20 @@ export const Content: React.FC = () => {
   const [todoToDelete, setTodoToDelete] = useState<string | null>(null);
 
   const { data: session } = useSession();
+
   const {
     mutate: fetchTodos,
     isError,
     isLoading,
-  } = trpc.useMutation(['todo.get'], {
+  } = trpc.todo.get.useMutation({
     onSuccess: (data) => setTodos(data),
   });
 
-  const { mutate: createTodo } = trpc.useMutation(['todo.create'], {
+  const { mutate: createTodo } = trpc.todo.create.useMutation({
     onSettled: () => fetchTodos({ order }),
   });
 
-  const { mutate: deleteTodo } = trpc.useMutation(['todo.delete'], {
+  const { mutate: deleteTodo } = trpc.todo.delete.useMutation({
     onSettled: () => fetchTodos({ order }),
   });
 

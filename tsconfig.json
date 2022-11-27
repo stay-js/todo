@@ -21,6 +21,7 @@
     "paths": {
       "@components/*": ["src/components/*"],
       "@env/*": ["src/env/*"],
+      "@pages/*": ["src/pages/*"],
       "@server/*": ["src/server/*"],
       "@styles/*": ["src/styles/*"],
       "@types/*": ["src/types/*"],
