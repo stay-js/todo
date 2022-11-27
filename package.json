@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "dev": "next dev",
     "build": "next build",
+    "dev": "next dev",
+    "lint": "next lint",
     "start": "next start",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix .",
     "postinstall": "prisma generate"
   },
   "dependencies": {
