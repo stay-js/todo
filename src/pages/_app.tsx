@@ -5,8 +5,8 @@ import { withTRPC } from '@trpc/next';
 import { SessionProvider } from 'next-auth/react';
 import Head from 'next/head';
 import superjson from 'superjson';
-import Footer from '@components/Footer';
-import { env } from '@env/client.mjs';
+import { Footer } from '@components/Footer';
+
 import '@styles/globals.css';
 
 const App: AppType<{ session: Session | null }> = ({
@@ -46,14 +46,16 @@ const App: AppType<{ session: Session | null }> = ({
   </>
 );
 
+const getBaseUrl = () => {
+  if (typeof window !== 'undefined') return '';
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  return `http://localhost:${process.env.PORT ?? 3000}`;
+};
+
 export default withTRPC<AppRouter>({
   config: () => {
-    const url = env.NEXT_PUBLIC_VERCEL_URL
-      ? `https://${env.NEXT_PUBLIC_VERCEL_URL}/api/trpc`
-      : 'http://localhost:3000/api/trpc';
-
     return {
-      url,
+      url: `${getBaseUrl()}/api/trpc`,
       transformer: superjson,
       queryClientConfig: {
         defaultOptions: { queries: { staleTime: 60, refetchOnWindowFocus: false } },

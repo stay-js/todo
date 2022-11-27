@@ -3,7 +3,7 @@ import * as trpc from '@trpc/server';
 import { unstable_getServerSession as getServerSession } from 'next-auth';
 
 import { authOptions as nextAuthOptions } from '../../pages/api/auth/[...nextauth]';
-import prisma from '../db/client';
+import { prisma } from '../db/client';
 
 export const createContext = async (opts?: trpcNext.CreateNextContextOptions) => {
   const req = opts?.req;

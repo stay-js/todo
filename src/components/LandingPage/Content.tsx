@@ -5,7 +5,7 @@ import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useEffect, useState, Fragment } from 'react';
 import { TbAlertCircle, TbSelector } from 'react-icons/tb';
-import trpc from '@utils/trpc';
+import { trpc } from '@utils/trpc';
 
 const validate = (value: string): string | null => {
   if (!value) return 'Please specify a todo!';
@@ -14,7 +14,7 @@ const validate = (value: string): string | null => {
   return null;
 };
 
-const Content: React.FC = () => {
+export const Content: React.FC = () => {
   const [parent] = useAutoAnimate<HTMLDivElement>();
   const [todos, setTodos] = useState<Todo[] | null>(null);
   const [order, setOrder] = useState<'desc' | 'asc'>('desc');
@@ -239,5 +239,3 @@ const Content: React.FC = () => {
     </>
   );
 };
-
-export default Content;
