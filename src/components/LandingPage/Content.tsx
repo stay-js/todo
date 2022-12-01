@@ -43,8 +43,9 @@ export const Content: React.FC = () => {
     if (!value) return setError('Please specify a todo!');
     if (value.length > 200) return setError('Length should be between 0 and 200!');
 
-    createTodo({ body: value });
+    setError(null)
     inputRef.current.value = '';
+    createTodo({ body: value });
   };
 
   const handleOpenPopup = (id: string) => {
