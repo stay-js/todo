@@ -1,5 +1,5 @@
 import type { Todo } from '@prisma/client';
-import { useEffect, useState, Fragment } from 'react';
+import { useEffect, useState, useRef, Fragment } from 'react';
 import Image from 'next/image';
 import { signOut, useSession } from 'next-auth/react';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
@@ -7,21 +7,15 @@ import { Dialog, Transition } from '@headlessui/react';
 import { TbAlertCircle, TbSelector } from 'react-icons/tb';
 import { trpc } from '@utils/trpc';
 
-const validate = (value: string): string | null => {
-  if (!value) return 'Please specify a todo!';
-  if (value.length > 200) return 'Length should be between 0 and 200!';
-
-  return null;
-};
-
 export const Content: React.FC = () => {
-  const [parent] = useAutoAnimate<HTMLDivElement>();
   const [todos, setTodos] = useState<Todo[] | null>(null);
   const [order, setOrder] = useState<'desc' | 'asc'>('desc');
   const [error, setError] = useState<string | null>(null);
-  const [value, setValue] = useState<string>('');
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
   const [todoToDelete, setTodoToDelete] = useState<string | null>(null);
+
+  const [parent] = useAutoAnimate<HTMLDivElement>();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const { data: session } = useSession();
 
@@ -44,13 +38,13 @@ export const Content: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const newError = validate(value);
-    setError(newError);
+    const value = inputRef.current?.value;
 
-    if (!newError) {
-      createTodo({ body: value });
-      setValue('');
-    }
+    if (!value) return setError('Please specify a todo!');
+    if (value.length > 200) return setError('Length should be between 0 and 200!');
+
+    createTodo({ body: value });
+    inputRef.current.value = '';
   };
 
   const handleOpenPopup = (id: string) => {
@@ -223,8 +217,7 @@ export const Content: React.FC = () => {
               className="h-10 w-full rounded border border-[#373A40] bg-[#25262b] px-2 text-sm text-neutral-400"
               placeholder="Create new todo:"
               id="body"
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
+              ref={inputRef}
             />
 
             {error && <p className="text-xs text-red-500">{error}</p>}
