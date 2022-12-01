@@ -18,7 +18,7 @@ export const todoRouter = router({
       }
     }),
   create: protectedProcedure
-    .input(z.object({ body: z.string().min(0).max(200) }))
+    .input(z.object({ body: z.string().max(200) }))
     .mutation(async ({ ctx, input: { body } }) => {
       try {
         const todo = await ctx.prisma.user.update({
