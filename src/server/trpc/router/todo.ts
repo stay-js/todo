@@ -14,7 +14,7 @@ export const todoRouter = router({
         return todos;
       } catch (error) {
         console.error(error);
-        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR' });
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', cause: error });
       }
     }),
   create: protectedProcedure
@@ -28,7 +28,7 @@ export const todoRouter = router({
         return todo;
       } catch (error) {
         console.error(error);
-        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR' });
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', cause: error });
       }
     }),
   delete: protectedProcedure
@@ -39,7 +39,7 @@ export const todoRouter = router({
         return deletedTodo;
       } catch (error) {
         console.error(error);
-        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR' });
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', cause: error });
       }
     }),
 });

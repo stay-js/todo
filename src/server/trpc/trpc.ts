@@ -12,12 +12,7 @@ export const router = t.router;
 export const publicProcedure = t.procedure;
 
 const isAuthed = t.middleware(({ ctx, next }) => {
-  if (!ctx.session || !ctx.session.user) {
-    throw new TRPCError({ code: 'UNAUTHORIZED', cause: 'No session' });
-  }
-
-  const id = ctx.session.user.id;
-  if (!id || typeof id !== 'string') throw new TRPCError({ code: 'UNAUTHORIZED', cause: 'No ID' });
+  if (!ctx.session || !ctx.session.user) throw new TRPCError({ code: 'UNAUTHORIZED' });
 
   return next({
     ctx: {
