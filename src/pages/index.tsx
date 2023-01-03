@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { useSession } from 'next-auth/react';
 import { SignIn, Content } from '@components/LandingPage';
 
-const Home: NextPage = () => {
+const Page: NextPage = () => {
   const { data: session } = useSession();
 
   return (
@@ -44,4 +44,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default Page;
