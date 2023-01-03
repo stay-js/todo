@@ -1,19 +1,13 @@
 await import('./src/env/server.mjs');
 
-/**
- * @template {import('next').NextConfig} T
- * @param {T} config - A generic parameter that flows through to the return type
- * @constraint {{import('next').NextConfig}}
- */
+/** @type {import("next").NextConfig} */
 
-function defineNextConfig(config) {
-  return config;
-}
-
-export default defineNextConfig({
+const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
     domains: ['avatars.githubusercontent.com'],
   },
-});
+};
+
+export default nextConfig;
