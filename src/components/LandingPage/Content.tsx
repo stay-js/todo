@@ -11,7 +11,6 @@ export const Content: React.FC = () => {
   const [todos, setTodos] = useState<Todo[] | null>(null);
   const [order, setOrder] = useState<'desc' | 'asc'>('desc');
   const [error, setError] = useState<string | null>(null);
-  const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
   const [todoToDelete, setTodoToDelete] = useState<string | null>(null);
 
   const [parent] = useAutoAnimate<HTMLDivElement>();
@@ -32,6 +31,7 @@ export const Content: React.FC = () => {
   });
 
   const { mutate: deleteTodo } = trpc.todo.delete.useMutation({
+    onMutate: () => setTodoToDelete(null),
     onSettled: () => fetchTodos({ order }),
   });
 
@@ -48,81 +48,72 @@ export const Content: React.FC = () => {
     createTodo({ body: value });
   };
 
-  const handleOpenPopup = (id: string) => {
-    setTodoToDelete(id);
-    setIsPopupOpen(true);
-  };
-
-  const handleDelete = (id: string) => {
-    deleteTodo({ id });
-    setIsPopupOpen(false);
-    setTodoToDelete(null);
-  };
-
   useEffect(() => {
     fetchTodos({ order });
   }, [fetchTodos, order]);
 
   return (
     <>
-      <Transition appear show={isPopupOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-50" onClose={() => setIsPopupOpen(false)}>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black bg-opacity-50" />
-          </Transition.Child>
-
-          <div className="fixed inset-0 grid place-items-center">
+      {todoToDelete && (
+        <Transition appear show as={Fragment}>
+          <Dialog as="div" className="relative z-50" onClose={() => setTodoToDelete(null)}>
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
               leave="ease-in duration-200"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
             >
-              <Dialog.Panel className="flex w-11/12 max-w-md flex-col gap-4 rounded-2xl bg-neutral-900 p-6 shadow-xl">
-                <div className="flex flex-col gap-2">
-                  <Dialog.Title className="text-lg font-bold text-neutral-50">
-                    Delete Todo
-                  </Dialog.Title>
-
-                  <Dialog.Description className="m-0 text-sm text-neutral-200">
-                    Are you sure you want to delete this Todo? This action <b>cannot be undone</b>.
-                    This will <b>permanently</b> delete the selected Todo.
-                  </Dialog.Description>
-                </div>
-
-                <div className="flex gap-2">
-                  <button
-                    type="button"
-                    className="rounded border-2 border-green-500 bg-green-500 py-2 px-4 text-sm font-bold text-white transition-all hover:bg-transparent hover:text-green-500"
-                    onClick={() => setIsPopupOpen(false)}
-                  >
-                    Cancel
-                  </button>
-
-                  <button
-                    type="button"
-                    className="rounded border-2 border-red-500 bg-red-500 py-2 px-4 text-sm font-bold text-white transition-all hover:bg-transparent hover:text-red-500"
-                    onClick={() => handleDelete(todoToDelete!)}
-                  >
-                    Delete <span className="hidden sm:inline-block">Todo</span>
-                  </button>
-                </div>
-              </Dialog.Panel>
+              <div className="fixed inset-0 bg-black bg-opacity-50" />
             </Transition.Child>
-          </div>
-        </Dialog>
-      </Transition>
+
+            <div className="fixed inset-0 grid place-items-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="flex w-11/12 max-w-md flex-col gap-4 rounded-2xl bg-neutral-900 p-6 shadow-xl">
+                  <div className="flex flex-col gap-2">
+                    <Dialog.Title className="text-lg font-bold text-neutral-50">
+                      Delete Todo
+                    </Dialog.Title>
+
+                    <Dialog.Description className="m-0 text-sm text-neutral-200">
+                      Are you sure you want to delete this Todo? This action <b>cannot be undone</b>
+                      . This will <b>permanently</b> delete the selected Todo.
+                    </Dialog.Description>
+                  </div>
+
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      className="rounded border-2 border-green-500 bg-green-500 py-2 px-4 text-sm font-bold text-white transition-all hover:bg-transparent hover:text-green-500"
+                      onClick={() => setTodoToDelete(null)}
+                    >
+                      Cancel
+                    </button>
+
+                    <button
+                      type="button"
+                      className="rounded border-2 border-red-500 bg-red-500 py-2 px-4 text-sm font-bold text-white transition-all hover:bg-transparent hover:text-red-500"
+                      onClick={() => deleteTodo({ id: todoToDelete })}
+                    >
+                      Delete <span className="hidden sm:inline-block">Todo</span>
+                    </button>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </Dialog>
+        </Transition>
+      )}
 
       <div className="relative flex items-center justify-between px-6 py-4 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-neutral-700">
         <div className="flex items-center gap-4">
@@ -203,7 +194,7 @@ export const Content: React.FC = () => {
               <button
                 type="button"
                 className="whitespace-nowrap rounded border-2 border-red-500 bg-red-500 px-4 py-2 text-sm font-bold text-white transition-all hover:bg-transparent hover:text-red-500"
-                onClick={() => handleOpenPopup(id)}
+                onClick={() => setTodoToDelete(id)}
               >
                 Delete <span className="hidden sm:inline-block">Todo</span>
               </button>
