@@ -212,40 +212,40 @@
   dependencies:
     tslib "^2.4.0"
 
-"@tanstack/query-core@4.20.9":
-  version "4.20.9"
-  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-4.20.9.tgz#62eb14c2fd6688eaa507452881c96a2c8b6d2544"
-  integrity sha512-XTEEvOGy7wlABPTYfmg7U287WYcf2PV8lH15oKWD2I09okqMOHrB23WxyikEVRwJCjYNKcCW0BuYaAY4S2g/jg==
+"@tanstack/query-core@4.21.0":
+  version "4.21.0"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-4.21.0.tgz#c5bab5f5f9d7f2441101ab415a4fbfd6ee0f046d"
+  integrity sha512-4+yOhyNafzjCagOErF2u7AiBuOV8uDBgR+3AWBe/ZArm0X5scBtF8Dgj+YAXazdolsDcNGyDGT7Zvbs0hhTyJA==
 
-"@tanstack/react-query@^4.20.9":
-  version "4.20.9"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-4.20.9.tgz#0ec2e734085570ce642ae7de8586eb31d562532c"
-  integrity sha512-OqwcmqkxOYgLbVjsMm4Cl8MMZ063VqdRw1GpSWqN8WgppftPiFJTDb6Q1TX5I/ciCbHmRWNPE/D0ayyTesAKug==
+"@tanstack/react-query@^4.21.0":
+  version "4.21.0"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-4.21.0.tgz#a30cf6053eeefd2214e211e0a24f3ba53b7a8e61"
+  integrity sha512-LF7jBfv98U429Wd8UEUR7VdeBAmft89FK8/Ovh1cMNpF5DM2y0TfYwuonaArdKgCpTtrkjXIwbX5mDoylTGvFQ==
   dependencies:
-    "@tanstack/query-core" "4.20.9"
+    "@tanstack/query-core" "4.21.0"
     use-sync-external-store "^1.2.0"
 
-"@trpc/client@^10.7.0":
-  version "10.7.0"
-  resolved "https://registry.yarnpkg.com/@trpc/client/-/client-10.7.0.tgz#73793dfdfd1a0b8d0484c69bfc558dfd28843fe6"
-  integrity sha512-xCPc2hp37REJst6TXMkJvdc85CHvxpVY6YVdZIjl7uCYoQcrstwy8AWi7ElB3x7e19Cweke+9CAaUXKwAE1AKQ==
+"@trpc/client@^10.8.1":
+  version "10.8.1"
+  resolved "https://registry.yarnpkg.com/@trpc/client/-/client-10.8.1.tgz#779e92788e29ab80c5f8705df95b3664d0c0ea2e"
+  integrity sha512-DQ+Y3ek/rjCYaI8ifeeVPVW/KIO6ryye32Xdm9VAkdhd1humYD/4rN2CQ7K1zPTeNpbIpuckEAMEadeB4ItcMQ==
 
-"@trpc/next@^10.7.0":
-  version "10.7.0"
-  resolved "https://registry.yarnpkg.com/@trpc/next/-/next-10.7.0.tgz#33ec7d134f9d3093e59cba1170dcb75bc9b914c0"
-  integrity sha512-ZLY4J9IgEHN2op0UM14NCwCDyodRUw8Pmxgnpr62+UMIhDll6uggb2an8Op87l9EeYdKhKe2VavDWphI8vFGgw==
+"@trpc/next@^10.8.1":
+  version "10.8.1"
+  resolved "https://registry.yarnpkg.com/@trpc/next/-/next-10.8.1.tgz#75b2b113108d8b028c99eca9778e7042bb7e458b"
+  integrity sha512-Jyn421PgZwoJPUodQWxnT+AI1j/u/0aiOu+fSvwQeot4LFCv61QnsD4IkVdYdlb/CnIKZWQIhYVO76RhHHNmhA==
   dependencies:
     react-ssr-prepass "^1.5.0"
 
-"@trpc/react-query@^10.7.0":
-  version "10.7.0"
-  resolved "https://registry.yarnpkg.com/@trpc/react-query/-/react-query-10.7.0.tgz#37cd9a3ab5db0e9bcf012cfec3669ce0ecc055e1"
-  integrity sha512-dSSmYid6NWocU32QMsH6qWEqnW4mbp7hX01hxsBfAA2mGYD8b4Kgc9ripw4MpPNbsJElJFyWDHfb/UHnhywWbA==
+"@trpc/react-query@^10.8.1":
+  version "10.8.1"
+  resolved "https://registry.yarnpkg.com/@trpc/react-query/-/react-query-10.8.1.tgz#54b276d77fffa61d0156dfcc2cfa68299aff10be"
+  integrity sha512-PSpdfPFKM/UlD9VVtXVtfA8ZmqQZUtsP6ER/+QvXjHN6kTZ92PGJGjcL2HWhWZamLKnZSgudiB6sDsl7gPcOgA==
 
-"@trpc/server@^10.7.0":
-  version "10.7.0"
-  resolved "https://registry.yarnpkg.com/@trpc/server/-/server-10.7.0.tgz#97c451cb5963c70fba68f4813c56111331baec3c"
-  integrity sha512-kFhlqhzZt5PwVRRDci8oJKMMFGjjq9189stT6bvS9xuuLjRzzwhMShRi99sm/jqhdjWmlXyO3Ncx0rnghUvH+w==
+"@trpc/server@^10.8.1":
+  version "10.8.1"
+  resolved "https://registry.yarnpkg.com/@trpc/server/-/server-10.8.1.tgz#7997c675c30e140076c4a7d421e8c23c01645e5d"
+  integrity sha512-oSNYgFNJbjki4jBByJ/SKHasB/X7kTsEbVGaONNH1DHMz638xlYXPQucV+2bWbhCm5HlXhQTaVN7Or0lsCuUUQ==
 
 "@types/json-schema@^7.0.9":
   version "7.0.11"
@@ -1695,10 +1695,10 @@ natural-compare@^1.4.0:
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==
 
-next-auth@^4.18.7:
-  version "4.18.7"
-  resolved "https://registry.yarnpkg.com/next-auth/-/next-auth-4.18.7.tgz#4ca61f427866fcfe133afa9138a886d0c2b5ca55"
-  integrity sha512-kR3s1JVPMaDuSAlFxcGyv7Ec3fdE6za71r1F77IOII5zJmW2wfkIA2xj223fM0D20ip2pzFpHfk/qN4L6l5XMA==
+next-auth@^4.18.8:
+  version "4.18.8"
+  resolved "https://registry.yarnpkg.com/next-auth/-/next-auth-4.18.8.tgz#34012ac107702b27779647e8787715cea948812a"
+  integrity sha512-USP8ihmvB7iCGtkS0+toe2QPrzdbZfkydQZX56JOI9Ft5n/BardOXh3D4wQ2An+vpq/jDKojGlgfv21wVElW7A==
   dependencies:
     "@babel/runtime" "^7.16.3"
     "@panva/hkdf" "^1.0.1"
@@ -1982,10 +1982,10 @@ postcss@8.4.14:
     picocolors "^1.0.0"
     source-map-js "^1.0.2"
 
-postcss@^8.4.18, postcss@^8.4.20:
-  version "8.4.20"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.20.tgz#64c52f509644cecad8567e949f4081d98349dc56"
-  integrity sha512-6Q04AXR1212bXr5fh03u8aAwbLxAQNGQ/Q1LNa0VfOI06ZAlhPHtQvE4OIdpj4kLThXilalPnmDSOD65DcHt+g==
+postcss@^8.4.18, postcss@^8.4.21:
+  version "8.4.21"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.21.tgz#c639b719a57efc3187b13a1d765675485f4134f4"
+  integrity sha512-tP7u/Sn/dVxK2NnruI4H9BG+x+Wxz6oeZ1cJ8P6G/PZY0IKk4k/63TDsQf2kQq3+qoJeLm2kIBUNlZe3zgb4Zg==
   dependencies:
     nanoid "^3.3.4"
     picocolors "^1.0.0"
@@ -2013,10 +2013,10 @@ prettier-plugin-tailwindcss@^0.2.1:
   resolved "https://registry.yarnpkg.com/prettier-plugin-tailwindcss/-/prettier-plugin-tailwindcss-0.2.1.tgz#989b35afd86c550cb671da69891aba4f4a051159"
   integrity sha512-aIO8IguumORyRsmT+E7JfJ3A9FEoyhqZR7Au7TBOege3VZkgMvHJMkufeYp4zjnDK2iq4ktkvGMNOQR9T8lisQ==
 
-prettier@^2.8.1:
-  version "2.8.1"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.1.tgz#4e1fd11c34e2421bc1da9aea9bd8127cd0a35efc"
-  integrity sha512-lqGoSJBQNJidqCHE80vqZJHWHRFoNYsSpP9AjFhlhi9ODCJA541svILes/+/1GM3VaL/abZi7cpFzOpdR9UPKg==
+prettier@^2.8.2:
+  version "2.8.2"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.2.tgz#c4ea1b5b454d7c4b59966db2e06ed7eec5dfd160"
+  integrity sha512-BtRV9BcncDyI2tsuS19zzhzoxD8Dh8LiCx7j7tHzrkz8GFXAexeWFdi22mjE1d16dftH2qNaytVxqiRTGlMfpw==
 
 pretty-format@^3.8.0:
   version "3.8.0"
