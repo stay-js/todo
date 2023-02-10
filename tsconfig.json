@@ -24,10 +24,9 @@
       "@pages/*": ["src/pages/*"],
       "@server/*": ["src/server/*"],
       "@styles/*": ["src/styles/*"],
-      "@types/*": ["src/types/*"],
       "@utils/*": ["src/utils/*"]
     }
   },
-  "include": ["next-env.d.ts", "src"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.cjs", "**/*.mjs"],
   "exclude": ["node_modules"]
 }
