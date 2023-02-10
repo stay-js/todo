@@ -1,6 +1,6 @@
-await import('./src/env/server.mjs');
-
 /** @type {import("next").NextConfig} */
+
+await import('./src/env/server.mjs');
 
 const nextConfig = {
   reactStrictMode: true,
