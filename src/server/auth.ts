@@ -3,8 +3,8 @@ import type { GetServerSidePropsContext } from 'next';
 import { getServerSession } from 'next-auth';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import GithubProvider from 'next-auth/providers/github';
-import { env } from '@env/server.mjs';
 import { prisma } from '@server/db';
+import { env } from 'src/env.mjs';
 
 declare module 'next-auth' {
   interface Session {
