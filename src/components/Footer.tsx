@@ -4,7 +4,7 @@ export const Footer: React.FC = () => (
   <footer className="flex flex-col items-center justify-between bg-neutral-800 p-6 text-white md:flex-row">
     <p>
       Made with &#10084;&#65039; by{' '}
-      <Link className="link font-bold" href="https://znagy.hu/" target="_blank">
+      <Link className="link font-bold" href="https://znagy.hu" target="_blank">
         stay
       </Link>{' '}
       from <b>Hungary</b>.
@@ -15,11 +15,11 @@ export const Footer: React.FC = () => (
         GitHub
       </Link>
 
-      <Link className="link font-bold" href="https://vercel.com/" target="_blank">
+      <Link className="link font-bold" href="https://vercel.com" target="_blank">
         Vercel
       </Link>
 
-      <Link className="link font-bold" href="https://planetscale.com/" target="_blank">
+      <Link className="link font-bold" href="https://planetscale.com" target="_blank">
         PlanetScale
       </Link>
     </div>
