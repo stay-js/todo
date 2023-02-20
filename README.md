@@ -1,4 +1,4 @@
-# znagy.hu
+# Todo App
 
 Simple Todo App with [GitHub](https://github.com) authentication, built with [t3-stack](https://create.t3.gg).
 
