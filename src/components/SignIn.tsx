@@ -2,7 +2,7 @@ import { signIn } from 'next-auth/react';
 import { FaGithub } from 'react-icons/fa';
 
 export const SignIn: React.FC = () => (
-  <div
+  <main
     className="mx-auto flex w-11/12 flex-col items-center justify-center gap-4"
     style={{
       height: 'calc(100vh - 4.5rem)',
@@ -15,10 +15,10 @@ export const SignIn: React.FC = () => (
     <button
       type="button"
       className="flex items-center gap-2 rounded-lg bg-[#24292F] px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-[#24292F]/90"
-      onClick={() => signIn('github')}
+      onClick={() => void signIn('github')}
     >
       <FaGithub size={18} />
       Sign in with Github
     </button>
-  </div>
+  </main>
 );
