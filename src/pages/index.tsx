@@ -192,11 +192,7 @@ export const Todos: React.FC = () => {
             ref={inputRef}
           />
 
-          <input
-            className="h-10 rounded border-2 border-green-500 bg-green-500 px-4 text-sm font-bold text-white transition-all hover:bg-transparent hover:text-green-500"
-            type="submit"
-            value="Create"
-          />
+          <Button type="submit">Create</Button>
         </form>
       </main>
     </>
