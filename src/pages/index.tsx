@@ -173,7 +173,8 @@ export const Todos: React.FC = () => {
               key={id}
               className="flex items-center justify-between gap-2 rounded bg-neutral-800 px-6 py-4"
             >
-              {body}
+              <span>{body}</span>
+
               <Button variant="red" onClick={() => setTodoToDelete(id)}>
                 Delete <span className="hidden sm:inline-block">Todo</span>
               </Button>
