@@ -1,5 +1,5 @@
 export const Button: React.FC<{
-  onClick: () => void;
+  onClick?: () => void;
   variant?: 'red' | 'green';
   type?: 'button' | 'submit' | 'reset';
   children: React.ReactNode;
