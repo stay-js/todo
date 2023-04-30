@@ -19,8 +19,6 @@ export const Meta: React.FC<{
       content="todo, todo app, github, github auth, github authentication, stay, znagy, znagy.hu"
     />
 
-    <meta name="theme-color" content="#22c55e" />
-
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Todo App" />
