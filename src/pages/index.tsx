@@ -205,7 +205,7 @@ const Page: NextPage = () => {
 
   return (
     <>
-      <Meta path="/" title="Todo" desc="Todo App with GitHub authentication." />
+      <Meta path="/" title="Todo" description="Todo App with GitHub authentication." />
 
       {session ? <Todos /> : <SignIn />}
     </>
