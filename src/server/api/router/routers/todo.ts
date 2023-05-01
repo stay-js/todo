@@ -11,6 +11,7 @@ export const todoRouter = router({
           where: { userId: ctx.session.user.id },
           orderBy: { createdAt: input.order },
         });
+
         return todos;
       } catch (error) {
         console.error(error);
@@ -21,7 +22,7 @@ export const todoRouter = router({
     .input(z.object({ body: z.string().max(200) }))
     .mutation(async ({ ctx, input }) => {
       try {
-        const todo = await ctx.prisma.user.update({
+        await ctx.prisma.user.update({
           where: {
             id: ctx.session.user.id,
           },
@@ -33,7 +34,8 @@ export const todoRouter = router({
             },
           },
         });
-        return todo;
+
+        return { message: 'Success' };
       } catch (error) {
         console.error(error);
         throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', cause: error });
@@ -43,8 +45,9 @@ export const todoRouter = router({
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
       try {
-        const deletedTodo = await ctx.prisma.todo.delete({ where: { id: input.id } });
-        return deletedTodo;
+        await ctx.prisma.todo.delete({ where: { id: input.id } });
+
+        return { message: 'Success' };
       } catch (error) {
         console.error(error);
         throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', cause: error });
