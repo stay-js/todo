@@ -21,16 +21,16 @@ const Todos: React.FC = () => {
 
   const { data: session } = useSession();
 
-  const { refetch, isError, isLoading } = trpc.todo.getAll.useQuery(
+  const { refetch, isError, isLoading } = trpc.todos.getAll.useQuery(
     { order },
     { onSettled: (data) => setTodos(data) },
   );
 
-  const { mutate: createTodo } = trpc.todo.create.useMutation({
+  const { mutate: createTodo } = trpc.todos.create.useMutation({
     onSettled: () => refetch(),
   });
 
-  const { mutate: deleteTodo } = trpc.todo.delete.useMutation({
+  const { mutate: deleteTodo } = trpc.todos.delete.useMutation({
     onMutate: () => setTodoToDelete(null),
     onSettled: () => refetch(),
   });
