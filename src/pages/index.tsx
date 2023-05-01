@@ -18,8 +18,9 @@ const Todos: React.FC = () => {
   const [order, setOrder] = useState<Order>('desc');
   const [todoToDelete, setTodoToDelete] = useState<string | null>(null);
 
-  const [parent] = useAutoAnimate<HTMLDivElement>();
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const [parent] = useAutoAnimate<HTMLDivElement>();
 
   const { data: session } = useSession();
 
