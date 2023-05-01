@@ -11,9 +11,11 @@ import { Meta } from '@components/Meta';
 import { Button } from '@components/Button';
 import { SignIn } from '@components/SignIn';
 
+type Order = 'desc' | 'asc';
+
 const Todos: React.FC = () => {
   const [todos, setTodos] = useState<Todo[] | null | undefined>(null);
-  const [order, setOrder] = useState<'desc' | 'asc'>('desc');
+  const [order, setOrder] = useState<Order>('desc');
   const [todoToDelete, setTodoToDelete] = useState<string | null>(null);
 
   const [parent] = useAutoAnimate<HTMLDivElement>();
@@ -128,7 +130,7 @@ const Todos: React.FC = () => {
             <select
               className="h-10 w-full appearance-none bg-transparent pl-2 pr-8"
               value={order}
-              onChange={(e) => setOrder(e.target.value as 'desc' | 'asc')}
+              onChange={(e) => setOrder(e.target.value as Order)}
             >
               <option value="desc">Latest first</option>
               <option value="asc">Oldest first</option>
