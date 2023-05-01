@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { router, protectedProcedure } from '../../trpc';
 
 export const todoRouter = router({
-  get: protectedProcedure
+  getAll: protectedProcedure
     .input(z.object({ order: z.enum(['desc', 'asc']) }))
     .mutation(async ({ ctx, input }) => {
       try {

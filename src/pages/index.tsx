@@ -25,7 +25,7 @@ export const Todos: React.FC = () => {
     mutate: fetchTodos,
     isError,
     isLoading,
-  } = trpc.todo.get.useMutation({
+  } = trpc.todo.getAll.useMutation({
     onSuccess: (data) => setTodos(data),
   });
 
