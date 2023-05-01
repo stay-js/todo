@@ -8,8 +8,12 @@ export const todoRouter = router({
     .query(async ({ ctx, input }) => {
       try {
         const todos = await ctx.prisma.todo.findMany({
-          where: { userId: ctx.session.user.id },
-          orderBy: { createdAt: input.order },
+          where: {
+            userId: ctx.session.user.id,
+          },
+          orderBy: {
+            createdAt: input.order,
+          },
         });
 
         return todos;
