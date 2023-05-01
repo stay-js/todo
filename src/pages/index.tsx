@@ -8,11 +8,11 @@ import { Dialog, Transition } from '@headlessui/react';
 import { TbAlertCircle, TbSelector } from 'react-icons/tb';
 import { trpc } from '@utils/trpc';
 import { Meta } from '@components/Meta';
-import { SignIn } from '@components/SignIn';
 import { Button } from '@components/Button';
+import { SignIn } from '@components/SignIn';
 
-export const Todos: React.FC = () => {
-  const [todos, setTodos] = useState<Todo[] | null>(null);
+const Todos: React.FC = () => {
+  const [todos, setTodos] = useState<Todo[] | null | undefined>(null);
   const [order, setOrder] = useState<'desc' | 'asc'>('desc');
   const [todoToDelete, setTodoToDelete] = useState<string | null>(null);
 
@@ -21,21 +21,18 @@ export const Todos: React.FC = () => {
 
   const { data: session } = useSession();
 
-  const {
-    mutate: fetchTodos,
-    isError,
-    isLoading,
-  } = trpc.todo.getAll.useMutation({
-    onSuccess: (data) => setTodos(data),
-  });
+  const { refetch, isError, isLoading } = trpc.todo.getAll.useQuery(
+    { order },
+    { onSettled: (data) => setTodos(data) },
+  );
 
   const { mutate: createTodo } = trpc.todo.create.useMutation({
-    onSettled: () => fetchTodos({ order }),
+    onSettled: () => refetch(),
   });
 
   const { mutate: deleteTodo } = trpc.todo.delete.useMutation({
     onMutate: () => setTodoToDelete(null),
-    onSettled: () => fetchTodos({ order }),
+    onSettled: () => refetch(),
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -48,8 +45,8 @@ export const Todos: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchTodos({ order });
-  }, [fetchTodos, order]);
+    void refetch();
+  }, [refetch, order]);
 
   return (
     <>
@@ -167,20 +164,22 @@ export const Todos: React.FC = () => {
           </svg>
         )}
 
-        <div className="flex max-h-[60vh] flex-col gap-4 overflow-auto" ref={parent}>
-          {todos?.map(({ id, body }) => (
-            <div
-              key={id}
-              className="flex items-center justify-between gap-2 rounded bg-neutral-800 px-6 py-4"
-            >
-              <span>{body}</span>
+        {todos && (
+          <div className="flex max-h-[60vh] flex-col gap-4 overflow-auto" ref={parent}>
+            {todos?.map(({ id, body }) => (
+              <div
+                key={id}
+                className="flex items-center justify-between gap-2 rounded bg-neutral-800 px-6 py-4"
+              >
+                <span>{body}</span>
 
-              <Button variant="red" onClick={() => setTodoToDelete(id)}>
-                Delete <span className="hidden sm:inline-block">Todo</span>
-              </Button>
-            </div>
-          ))}
-        </div>
+                <Button variant="red" onClick={() => setTodoToDelete(id)}>
+                  Delete <span className="hidden sm:inline-block">Todo</span>
+                </Button>
+              </div>
+            ))}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="flex w-full justify-between gap-2">
           <input

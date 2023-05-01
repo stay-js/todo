@@ -5,7 +5,7 @@ import { router, protectedProcedure } from '../../trpc';
 export const todoRouter = router({
   getAll: protectedProcedure
     .input(z.object({ order: z.enum(['desc', 'asc']) }))
-    .mutation(async ({ ctx, input }) => {
+    .query(async ({ ctx, input }) => {
       try {
         const todos = await ctx.prisma.todo.findMany({
           where: { userId: ctx.session.user.id },
