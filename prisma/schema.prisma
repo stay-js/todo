@@ -13,7 +13,7 @@ datasource db {
 
 model Todo {
     id        String   @id @default(cuid())
-    user      User     @relation(fields: [userId], references: [id])
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId    String
     body      String   @db.VarChar(200)
     createdAt DateTime @default(now())
