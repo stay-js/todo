@@ -93,7 +93,7 @@ const Todos: React.FC = () => {
                   <div className="flex gap-2">
                     <Button onClick={() => setTodoToDelete(null)}>Cancel</Button>
 
-                    <Button variant="red" onClick={() => deleteTodo({ id: todoToDelete })}>
+                    <Button color="red" onClick={() => deleteTodo({ id: todoToDelete })}>
                       Delete <span className="hidden sm:inline-block">Todo</span>
                     </Button>
                   </div>
@@ -176,7 +176,7 @@ const Todos: React.FC = () => {
               >
                 <span>{body}</span>
 
-                <Button variant="red" onClick={() => setTodoToDelete(id)}>
+                <Button color="red" onClick={() => setTodoToDelete(id)}>
                   Delete <span className="hidden sm:inline-block">Todo</span>
                 </Button>
               </div>
