@@ -1,4 +1,3 @@
-import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 import { router, protectedProcedure } from '../../trpc';
 
@@ -18,36 +17,26 @@ export const todoRouter = router({
   create: protectedProcedure
     .input(z.object({ body: z.string().max(200) }))
     .mutation(async ({ ctx, input }) => {
-      try {
-        await ctx.prisma.user.update({
-          where: {
-            id: ctx.session.user.id,
-          },
-          data: {
-            todos: {
-              create: {
-                body: input.body,
-              },
+      await ctx.prisma.user.update({
+        where: {
+          id: ctx.session.user.id,
+        },
+        data: {
+          todos: {
+            create: {
+              body: input.body,
             },
           },
-        });
+        },
+      });
 
-        return { message: 'Success' };
-      } catch (error) {
-        console.error(error);
-        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', cause: error });
-      }
+      return { message: 'Success' };
     }),
   delete: protectedProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
-      try {
-        await ctx.prisma.todo.delete({ where: { id: input.id } });
+      await ctx.prisma.todo.delete({ where: { id: input.id } });
 
-        return { message: 'Success' };
-      } catch (error) {
-        console.error(error);
-        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', cause: error });
-      }
+      return { message: 'Success' };
     }),
 });
