@@ -6,6 +6,7 @@ import { signOut, useSession } from 'next-auth/react';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { Dialog, Transition } from '@headlessui/react';
 import { TbAlertCircle, TbSelector } from 'react-icons/tb';
+import { toast } from 'react-hot-toast';
 import { trpc } from '@utils/trpc';
 import { Meta } from '@components/Meta';
 import { Button } from '@components/Button';
@@ -29,13 +30,15 @@ const Todos: React.FC = () => {
     { onSettled: (data) => setTodos(data) },
   );
 
-  const { mutate: createTodo } = trpc.todos.create.useMutation({
-    onSettled: () => refetch(),
+  const { mutate: createTodo, isLoading: isCreatingTodo } = trpc.todos.create.useMutation({
+    onSuccess: () => refetch(),
+    onError: () => toast.error('Failed to create Todo! Please try again later.'),
   });
 
   const { mutate: deleteTodo } = trpc.todos.delete.useMutation({
     onMutate: () => setTodoToDelete(null),
-    onSettled: () => refetch(),
+    onSuccess: () => refetch(),
+    onError: () => toast.error('Failed to delete Todo! Please try again later.'),
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -184,18 +187,20 @@ const Todos: React.FC = () => {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="flex w-full justify-between gap-2">
+        <form onSubmit={handleSubmit} className="flex w-full items-center justify-between gap-2">
           <input
             required
             type="text"
             maxLength={200}
             className="h-10 w-full rounded border border-[#373A40] bg-[#25262b] px-2 text-sm text-neutral-400"
             placeholder="Create new todo:"
-            id="body"
             ref={inputRef}
+            disabled={isCreatingTodo}
           />
 
-          <Button type="submit">Create</Button>
+          <Button type="submit" disabled={isCreatingTodo}>
+            {isCreatingTodo ? 'Creating...' : 'Create'}
+          </Button>
         </form>
       </main>
     </>
