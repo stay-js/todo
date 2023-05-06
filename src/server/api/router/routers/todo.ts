@@ -5,22 +5,15 @@ import { router, protectedProcedure } from '../../trpc';
 export const todoRouter = router({
   getAll: protectedProcedure
     .input(z.object({ order: z.enum(['desc', 'asc']) }))
-    .query(async ({ ctx, input }) => {
-      try {
-        const todos = await ctx.prisma.todo.findMany({
-          where: {
-            userId: ctx.session.user.id,
-          },
-          orderBy: {
-            createdAt: input.order,
-          },
-        });
-
-        return todos;
-      } catch (error) {
-        console.error(error);
-        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', cause: error });
-      }
+    .query(({ ctx, input }) => {
+      return ctx.prisma.todo.findMany({
+        where: {
+          userId: ctx.session.user.id,
+        },
+        orderBy: {
+          createdAt: input.order,
+        },
+      });
     }),
   create: protectedProcedure
     .input(z.object({ body: z.string().max(200) }))
