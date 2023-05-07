@@ -14,8 +14,6 @@ env:
   NEXTAUTH_URL: https://domain.com
   NEXTAUTH_SECRET: secret
 
-  NODE_ENV: production
-
 jobs:
   build:
     runs-on: ubuntu-latest
