@@ -1,0 +1,29 @@
+name: CI
+
+on: [push, pull_request]
+
+env:
+  DATABASE_URL: mysql://mysql.com
+  NEXTAUTH_SECRET: secret
+  NEXTAUTH_URL: https://domain.com
+  GITHUB_CLIENT_ID: id
+  GITHUB_CLIENT_SECRET: secret
+  UPSTASH_REDIS_REST_URL: https://redis.com
+  UPSTASH_REDIS_REST_TOKEN: token
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Typecheck
+        run: yarn typecheck
+
+      - name: Lint
+        run: yarn lint
