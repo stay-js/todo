@@ -32,7 +32,7 @@ const Todos: React.FC<{ order: Order }> = ({ order }) => {
     onError: () => toast.error('Failed to delete Todo! Please try again later.'),
   });
 
-  if (isLoading) {
+  if (!todos && isLoading) {
     return (
       <div className="py-6">
         <svg className="mx-auto h-8 w-8 animate-spin fill-none" viewBox="0 0 24 24">
