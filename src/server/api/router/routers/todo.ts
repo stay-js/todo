@@ -22,7 +22,7 @@ export const todoRouter = router({
     .mutation(async ({ ctx, input }) => {
       const ratelimit = new Ratelimit({
         redis: Redis.fromEnv(),
-        limiter: Ratelimit.slidingWindow(10, '10 s'),
+        limiter: Ratelimit.slidingWindow(3, '10 s'),
         analytics: true,
         prefix: '@upstash/ratelimit',
       });
