@@ -5,6 +5,9 @@ export const env = createEnv({
   server: {
     DATABASE_URL: z.string().url(),
 
+    UPSTASH_REDIS_REST_URL: z.string().url(),
+    UPSTASH_REDIS_REST_TOKEN: z.string().min(1),
+
     GITHUB_CLIENT_ID: z.string().min(1),
     GITHUB_CLIENT_SECRET: z.string().min(1),
 
@@ -15,23 +18,20 @@ export const env = createEnv({
     NEXTAUTH_SECRET:
       process.env.NODE_ENV === 'production' ? z.string().min(1) : z.string().optional(),
 
-    UPSTASH_REDIS_REST_URL: z.string().url(),
-    UPSTASH_REDIS_REST_TOKEN: z.string().min(1),
-
     NODE_ENV: z.enum(['development', 'test', 'production']),
   },
   client: {},
   runtimeEnv: {
     DATABASE_URL: process.env.DATABASE_URL,
 
+    UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
+    UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
+
     GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
     GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
 
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
-
-    UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
-    UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
 
     NODE_ENV: process.env.NODE_ENV,
   },
