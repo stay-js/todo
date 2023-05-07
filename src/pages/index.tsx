@@ -89,7 +89,13 @@ const Feed: React.FC<{ session: Session }> = ({ session }) => {
 
   const { mutate: createTodo, isLoading: isCreatingTodo } = trpc.todos.create.useMutation({
     onSuccess: () => ctx.todos.getAll.invalidate(),
-    onError: () => toast.error('Failed to create Todo! Please try again later.'),
+    onError: (error) => {
+      if (error.data?.code === 'TOO_MANY_REQUESTS') {
+        return toast.error('You are being rate limited! Please try again later.');
+      }
+
+      toast.error('Failed to create Todo! Please try again later.');
+    },
   });
 
   const handleSubmit = (e: React.FormEvent) => {
