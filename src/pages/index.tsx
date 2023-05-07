@@ -1,44 +1,127 @@
 import type { NextPage } from 'next';
+import type { Session } from 'next-auth';
 import type { Todo } from '@prisma/client';
 import Image from 'next/image';
 import { useEffect, useState, useRef, Fragment } from 'react';
 import { signOut, useSession } from 'next-auth/react';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { Dialog, Transition } from '@headlessui/react';
-import { TbAlertCircle, TbSelector } from 'react-icons/tb';
+import { TbSelector } from 'react-icons/tb';
 import { toast } from 'react-hot-toast';
 import { trpc } from '@utils/trpc';
 import { Meta } from '@components/Meta';
 import { Button } from '@components/Button';
 import { SignIn } from '@components/SignIn';
+import { Error, LoadingSpinner } from '@components/States';
 
 type Order = 'desc' | 'asc';
 
-const Todos: React.FC = () => {
+const Todos: React.FC<{ order: Order }> = ({ order }) => {
   const [todos, setTodos] = useState<Todo[] | null | undefined>(null);
-  const [order, setOrder] = useState<Order>('desc');
   const [todoToDelete, setTodoToDelete] = useState<string | null>(null);
 
-  const inputRef = useRef<HTMLInputElement>(null);
-
   const [parent] = useAutoAnimate<HTMLDivElement>();
-
-  const { data: session } = useSession();
 
   const { refetch, isError, isLoading } = trpc.todos.getAll.useQuery(
     { order },
     { onSettled: (data) => setTodos(data) },
   );
 
-  const { mutate: createTodo, isLoading: isCreatingTodo } = trpc.todos.create.useMutation({
-    onSuccess: () => refetch(),
-    onError: () => toast.error('Failed to create Todo! Please try again later.'),
-  });
-
   const { mutate: deleteTodo } = trpc.todos.delete.useMutation({
     onMutate: () => setTodoToDelete(null),
     onSuccess: () => refetch(),
     onError: () => toast.error('Failed to delete Todo! Please try again later.'),
+  });
+
+  if (isLoading) {
+    return (
+      <div className="py-6">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
+  if (isError) return <Error />;
+
+  return (
+    <>
+      <Transition appear show={!!todoToDelete} as={Fragment}>
+        <Dialog as="div" className="relative z-50" onClose={() => setTodoToDelete(null)}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-50" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 grid place-items-center">
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 scale-95"
+              enterTo="opacity-100 scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 scale-100"
+              leaveTo="opacity-0 scale-95"
+            >
+              <Dialog.Panel className="flex w-11/12 max-w-md flex-col gap-4 rounded-2xl bg-neutral-900 p-6 shadow-xl">
+                <div className="flex flex-col gap-2">
+                  <Dialog.Title className="text-lg font-bold text-neutral-50">
+                    Delete Todo
+                  </Dialog.Title>
+
+                  <Dialog.Description className="m-0 text-sm text-neutral-200">
+                    Are you sure you want to delete this Todo? This action <b>cannot be undone</b>.
+                    This will <b>permanently</b> delete the selected Todo.
+                  </Dialog.Description>
+                </div>
+
+                <div className="flex gap-2">
+                  <Button onClick={() => setTodoToDelete(null)}>Cancel</Button>
+
+                  <Button color="red" onClick={() => deleteTodo({ id: todoToDelete as string })}>
+                    Delete <span className="hidden sm:inline-block">Todo</span>
+                  </Button>
+                </div>
+              </Dialog.Panel>
+            </Transition.Child>
+          </div>
+        </Dialog>
+      </Transition>
+
+      <div className="flex max-h-[60vh] flex-col gap-4 overflow-auto" ref={parent}>
+        {todos?.map(({ id, body }) => (
+          <div
+            key={id}
+            className="flex items-center justify-between gap-2 rounded bg-neutral-800 px-6 py-4"
+          >
+            <span>{body}</span>
+
+            <Button color="red" onClick={() => setTodoToDelete(id)}>
+              Delete <span className="hidden sm:inline-block">Todo</span>
+            </Button>
+          </div>
+        ))}
+      </div>
+    </>
+  );
+};
+
+const Feed: React.FC<{ session: Session }> = ({ session }) => {
+  const [order, setOrder] = useState<Order>('desc');
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const ctx = trpc.useContext();
+
+  const { mutate: createTodo, isLoading: isCreatingTodo } = trpc.todos.create.useMutation({
+    onSuccess: () => ctx.todos.getAll.invalidate(),
+    onError: () => toast.error('Failed to create Todo! Please try again later.'),
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -51,65 +134,14 @@ const Todos: React.FC = () => {
   };
 
   useEffect(() => {
-    void refetch();
-  }, [refetch, order]);
+    void ctx.todos.getAll.invalidate();
+  }, [ctx, order]);
 
   return (
-    <>
-      {todoToDelete && (
-        <Transition appear show as={Fragment}>
-          <Dialog as="div" className="relative z-50" onClose={() => setTodoToDelete(null)}>
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <div className="fixed inset-0 bg-black bg-opacity-50" />
-            </Transition.Child>
-
-            <div className="fixed inset-0 grid place-items-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="flex w-11/12 max-w-md flex-col gap-4 rounded-2xl bg-neutral-900 p-6 shadow-xl">
-                  <div className="flex flex-col gap-2">
-                    <Dialog.Title className="text-lg font-bold text-neutral-50">
-                      Delete Todo
-                    </Dialog.Title>
-
-                    <Dialog.Description className="m-0 text-sm text-neutral-200">
-                      Are you sure you want to delete this Todo? This action <b>cannot be undone</b>
-                      . This will <b>permanently</b> delete the selected Todo.
-                    </Dialog.Description>
-                  </div>
-
-                  <div className="flex gap-2">
-                    <Button onClick={() => setTodoToDelete(null)}>Cancel</Button>
-
-                    <Button color="red" onClick={() => deleteTodo({ id: todoToDelete })}>
-                      Delete <span className="hidden sm:inline-block">Todo</span>
-                    </Button>
-                  </div>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </Dialog>
-        </Transition>
-      )}
-
+    <main>
       <div className="relative flex items-center justify-between px-6 py-4 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-neutral-700">
         <div className="flex items-center gap-4">
-          {session?.user?.image && (
+          {session.user?.image && (
             <Image
               className="select-none rounded-full"
               src={session.user.image}
@@ -127,7 +159,7 @@ const Todos: React.FC = () => {
         <Button onClick={() => void signOut()}>Sign Out</Button>
       </div>
 
-      <main className="mx-auto flex w-11/12 max-w-2xl flex-col gap-4 py-4">
+      <div className="mx-auto flex w-11/12 max-w-2xl flex-col gap-4 py-4">
         <div className="flex items-center justify-between">
           <p className="font-bold">Order Todos:</p>
           <div className="relative flex items-center rounded border border-[#373A40] bg-[#25262b] text-sm text-neutral-300">
@@ -147,39 +179,7 @@ const Todos: React.FC = () => {
           </div>
         </div>
 
-        {isError && (
-          <div className="flex flex-col items-center gap-2">
-            <TbAlertCircle size={48} color="red" className="animate-bounce" />
-            Something went wrong... try again later!
-          </div>
-        )}
-
-        {!todos && isLoading && (
-          <svg className="mx-auto h-8 w-8 animate-spin fill-none" viewBox="0 0 24 24">
-            <circle className="stroke-green-500 stroke-[4] opacity-25" cx="12" cy="12" r="10" />
-            <path
-              className="fill-green-500"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-            />
-          </svg>
-        )}
-
-        {todos && (
-          <div className="flex max-h-[60vh] flex-col gap-4 overflow-auto" ref={parent}>
-            {todos?.map(({ id, body }) => (
-              <div
-                key={id}
-                className="flex items-center justify-between gap-2 rounded bg-neutral-800 px-6 py-4"
-              >
-                <span>{body}</span>
-
-                <Button color="red" onClick={() => setTodoToDelete(id)}>
-                  Delete <span className="hidden sm:inline-block">Todo</span>
-                </Button>
-              </div>
-            ))}
-          </div>
-        )}
+        <Todos order={order} />
 
         <form onSubmit={handleSubmit} className="flex w-full items-center justify-between gap-2">
           <input
@@ -196,11 +196,10 @@ const Todos: React.FC = () => {
             {isCreatingTodo ? 'Creating...' : 'Create'}
           </Button>
         </form>
-      </main>
-    </>
+      </div>
+    </main>
   );
 };
-
 const Page: NextPage = () => {
   const { data: session } = useSession();
 
@@ -208,7 +207,7 @@ const Page: NextPage = () => {
     <>
       <Meta path="/" title="Todo" description="Todo App with GitHub authentication." />
 
-      {session ? <Todos /> : <SignIn />}
+      {session ? <Feed session={session} /> : <SignIn />}
     </>
   );
 };
