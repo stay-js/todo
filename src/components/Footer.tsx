@@ -22,6 +22,10 @@ export const Footer: React.FC = () => (
       <Link className="link font-bold" href="https://planetscale.com" target="_blank">
         PlanetScale
       </Link>
+
+      <Link className="link font-bold" href="https://upstash.com" target="_blank">
+        Upstash
+      </Link>
     </div>
   </footer>
 );
