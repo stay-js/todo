@@ -68,7 +68,7 @@ const Todos: React.FC<{ order: Order }> = ({ order }) => {
             key={id}
             className="flex items-center justify-between gap-2 rounded bg-neutral-800 px-6 py-4"
           >
-            <span>{body}</span>
+            <span style={{ overflowWrap: 'anywhere' }}>{body}</span>
 
             <Button color="red" onClick={() => setTodoToDelete(id)}>
               Delete <span className="hidden sm:inline-block">Todo</span>
