@@ -26,7 +26,7 @@ const Todos: React.FC<{ order: Order }> = ({ order }) => {
     { onSettled: (data) => setTodos(data) },
   );
 
-  const { mutate: deleteTodo } = trpc.todos.delete.useMutation({
+  const { mutate: deleteTodo, isLoading: isDeleting } = trpc.todos.delete.useMutation({
     onMutate: () => setTodoToDelete(null),
     onSuccess: () => refetch(),
     onError: () => toast.error('Failed to delete Todo! Please try again later.'),
@@ -57,9 +57,10 @@ const Todos: React.FC<{ order: Order }> = ({ order }) => {
   return (
     <>
       <Popup
-        todoToDelete={todoToDelete}
-        setTodoToDelete={setTodoToDelete}
-        deleteTodo={deleteTodo}
+        isOpen={!!todoToDelete}
+        isDeleting={isDeleting}
+        closeFn={() => setTodoToDelete(null)}
+        deleteFn={() => todoToDelete && deleteTodo({ id: todoToDelete })}
       />
 
       <div className="flex max-h-[60vh] flex-col gap-4 overflow-auto" ref={parent}>
@@ -130,7 +131,7 @@ const Feed: React.FC<{ session: Session }> = ({ session }) => {
           </p>
         </div>
 
-        <Button onClick={() => void signOut()}>Sign Out</Button>
+        <Button onClick={() => signOut()}>Sign Out</Button>
       </div>
 
       <div className="mx-auto flex w-11/12 max-w-2xl flex-col gap-4 py-4">

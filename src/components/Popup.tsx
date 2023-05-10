@@ -3,12 +3,13 @@ import { Dialog, Transition } from '@headlessui/react';
 import { Button } from './Button';
 
 export const Popup: React.FC<{
-  todoToDelete: string | null;
-  setTodoToDelete: (todo: string | null) => void;
-  deleteTodo: (todo: { id: string }) => void;
-}> = ({ todoToDelete, setTodoToDelete, deleteTodo }) => (
-  <Transition appear show={!!todoToDelete} as={Fragment}>
-    <Dialog as="div" className="relative z-50" onClose={() => setTodoToDelete(null)}>
+  isOpen: boolean;
+  isDeleting: boolean;
+  closeFn: () => void;
+  deleteFn: () => void;
+}> = ({ isOpen, isDeleting, closeFn, deleteFn }) => (
+  <Transition appear show={isOpen} as={Fragment}>
+    <Dialog as="div" className="relative z-50" onClose={closeFn}>
       <Transition.Child
         as={Fragment}
         enter="ease-out duration-300"
@@ -42,10 +43,10 @@ export const Popup: React.FC<{
             </div>
 
             <div className="flex gap-2">
-              <Button onClick={() => setTodoToDelete(null)}>Cancel</Button>
+              <Button onClick={closeFn}>Cancel</Button>
 
-              <Button color="red" onClick={() => deleteTodo({ id: todoToDelete as string })}>
-                Delete <span className="hidden sm:inline-block">Todo</span>
+              <Button color="red" onClick={deleteFn}>
+                {isDeleting ? 'Deleting...' : 'Delete'}
               </Button>
             </div>
           </Dialog.Panel>
