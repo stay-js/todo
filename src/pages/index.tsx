@@ -131,7 +131,7 @@ const Todos: React.FC<{ order: Order }> = ({ order }) => {
                       <textarea
                         className="w-full resize-none rounded-xl bg-zinc-800 p-3 text-sm font-normal"
                         placeholder="Add detailed description here..."
-                        rows={10}
+                        rows={15}
                         maxLength={2000}
                         defaultValue={currentTodo?.description ?? ''}
                         ref={descriptionRef}
