@@ -77,7 +77,12 @@ const Todos: React.FC<{ order: Order }> = ({ order }) => {
   return (
     <>
       <Transition appear show={!!currentTodo} as={Fragment}>
-        <Dialog as="div" className="relative z-50" onClose={() => setSelectedTodoID(null)}>
+        <Dialog
+          as="div"
+          className="relative z-50"
+          initialFocus={descriptionRef}
+          onClose={() => setSelectedTodoID(null)}
+        >
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
