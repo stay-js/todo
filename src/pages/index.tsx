@@ -6,7 +6,7 @@ import { useEffect, useState, useRef, Fragment } from 'react';
 import { signOut, useSession } from 'next-auth/react';
 import { Dialog, Transition } from '@headlessui/react';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { TbAlertCircle, TbSelector } from 'react-icons/tb';
+import { TbAlertCircle, TbAlignJustified, TbSelector, TbX } from 'react-icons/tb';
 import { toast } from 'react-hot-toast';
 import { trpc } from '@utils/trpc';
 import { Meta } from '@components/Meta';
@@ -17,7 +17,12 @@ type Order = 'desc' | 'asc';
 
 const Todos: React.FC<{ order: Order }> = ({ order }) => {
   const [todos, setTodos] = useState<Todo[] | null | undefined>(null);
-  const [todoToDelete, setTodoToDelete] = useState<string | null>(null);
+  const [selectedTodoID, setSelectedTodoID] = useState<string | null>(null);
+
+  const currentTodo = todos?.find((todo) => todo.id === selectedTodoID);
+
+  const titleRef = useRef<HTMLInputElement>(null);
+  const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
   const [parent] = useAutoAnimate<HTMLDivElement>();
 
@@ -27,10 +32,25 @@ const Todos: React.FC<{ order: Order }> = ({ order }) => {
   );
 
   const { mutate: deleteTodo, isLoading: isDeleting } = trpc.todos.delete.useMutation({
-    onMutate: () => setTodoToDelete(null),
+    onSettled: () => setSelectedTodoID(null),
     onSuccess: () => refetch(),
     onError: () => toast.error('Failed to delete Todo! Please try again later.'),
   });
+
+  const { mutate: updateTodo, isLoading: isUpdating } = trpc.todos.update.useMutation({
+    onSuccess: () => refetch(),
+    onError: () => toast.error('Failed to update Todo! Please try again later.'),
+  });
+
+  const onTodoUpdate = () => {
+    if (!currentTodo || !titleRef.current || !descriptionRef.current) return;
+
+    updateTodo({
+      ...currentTodo,
+      title: titleRef.current?.value.trim(),
+      description: descriptionRef.current?.value.trim(),
+    });
+  };
 
   if (!todos && isLoading) {
     return (
@@ -56,8 +76,8 @@ const Todos: React.FC<{ order: Order }> = ({ order }) => {
 
   return (
     <>
-      <Transition appear show={!!todoToDelete} as={Fragment}>
-        <Dialog as="div" className="relative z-50" onClose={() => setTodoToDelete(null)}>
+      <Transition appear show={!!currentTodo} as={Fragment}>
+        <Dialog as="div" className="relative z-50" onClose={() => setSelectedTodoID(null)}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -80,27 +100,73 @@ const Todos: React.FC<{ order: Order }> = ({ order }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="flex w-11/12 max-w-md flex-col gap-4 rounded-2xl bg-neutral-900 p-6 shadow-xl">
+              <Dialog.Panel className="flex w-11/12 max-w-3xl flex-col gap-4 rounded-2xl bg-neutral-900 p-6 shadow-xl">
                 <div className="flex flex-col gap-2">
-                  <Dialog.Title className="text-lg font-bold text-neutral-50">
-                    Delete Todo
+                  <Dialog.Title className="flex items-center justify-between gap-4 text-lg font-bold text-neutral-50">
+                    <input
+                      required
+                      type="text"
+                      className="w-full rounded bg-transparent px-1 py-2 text-lg font-semibold"
+                      maxLength={200}
+                      defaultValue={currentTodo?.title}
+                      ref={titleRef}
+                    />
+
+                    <button
+                      type="button"
+                      title="Close"
+                      className="rounded-full p-1.5 transition-colors hover:bg-neutral-700"
+                      onClick={() => setSelectedTodoID(null)}
+                    >
+                      <TbX size={24} />
+                    </button>
                   </Dialog.Title>
 
-                  <Dialog.Description className="m-0 text-sm text-neutral-200">
-                    Are you sure you want to delete this Todo? This action <b>cannot be undone</b>.
-                    This will <b>permanently</b> delete the selected Todo.
+                  <Dialog.Description className="m-0 grid gap-4 pt-4 text-sm text-neutral-200 sm:grid-cols-[3fr_1fr]">
+                    <div className="flex flex-col gap-2">
+                      <h3 className="flex items-center gap-2 text-base font-semibold">
+                        <TbAlignJustified size={26} className="inline-block" />
+                        Description
+                      </h3>
+                      <textarea
+                        className="w-full resize-none rounded-xl bg-zinc-800 p-3 text-sm font-normal"
+                        placeholder="Add detailed description here..."
+                        rows={10}
+                        maxLength={2000}
+                        defaultValue={currentTodo?.description ?? ''}
+                        ref={descriptionRef}
+                      />
+                    </div>
+
+                    {currentTodo && (
+                      <div className="flex min-w-[25%] flex-col gap-2">
+                        <Button
+                          disabled={isDeleting || isUpdating}
+                          className="flex w-full"
+                          onClick={onTodoUpdate}
+                        >
+                          {isUpdating ? 'Saving...' : 'Save'}
+                        </Button>
+                        <Button
+                          disabled={isDeleting || isUpdating}
+                          className="flex w-full"
+                          onClick={() =>
+                            updateTodo({ ...currentTodo, completed: !currentTodo.completed })
+                          }
+                        >
+                          Mark as {currentTodo.completed ? 'Pending' : 'Done'}
+                        </Button>
+                        <Button
+                          disabled={isDeleting || isUpdating}
+                          color="red"
+                          className="flex w-full"
+                          onClick={() => deleteTodo({ id: currentTodo.id })}
+                        >
+                          {isDeleting ? 'Deleting...' : 'Delete'}
+                        </Button>
+                      </div>
+                    )}
                   </Dialog.Description>
-                </div>
-
-                <div className="flex gap-2">
-                  <Button onClick={() => setTodoToDelete(null)}>Cancel</Button>
-
-                  <Button
-                    color="red"
-                    onClick={() => todoToDelete && deleteTodo({ id: todoToDelete })}
-                  >
-                    {isDeleting ? 'Deleting...' : 'Delete'}
-                  </Button>
                 </div>
               </Dialog.Panel>
             </Transition.Child>
@@ -109,17 +175,16 @@ const Todos: React.FC<{ order: Order }> = ({ order }) => {
       </Transition>
 
       <div className="flex max-h-[60vh] flex-col gap-4 overflow-auto" ref={parent}>
-        {todos?.map(({ id, body }) => (
-          <div
+        {todos?.map(({ id, title, completed }) => (
+          <button
             key={id}
-            className="flex items-center justify-between gap-2 rounded bg-neutral-800 px-6 py-4"
+            type="button"
+            onClick={() => setSelectedTodoID(id)}
+            className="rounded bg-neutral-800 px-6 py-4 text-start"
+            style={{ overflowWrap: 'anywhere' }}
           >
-            <span style={{ overflowWrap: 'anywhere' }}>{body}</span>
-
-            <Button color="red" onClick={() => setTodoToDelete(id)}>
-              Delete <span className="hidden sm:inline-block">Todo</span>
-            </Button>
-          </div>
+            {title} {completed && '- ✅'}
+          </button>
         ))}
       </div>
     </>
@@ -149,7 +214,7 @@ const Feed: React.FC<{ session: Session }> = ({ session }) => {
 
     if (!inputRef.current?.value) return;
 
-    createTodo({ body: inputRef.current.value });
+    createTodo({ title: inputRef.current.value });
     inputRef.current.value = '';
   };
 

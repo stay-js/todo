@@ -7,18 +7,32 @@ import { TRPCError } from '@trpc/server';
 export const todoRouter = router({
   getAll: protectedProcedure
     .input(z.object({ order: z.enum(['desc', 'asc']) }))
-    .query(({ ctx, input }) => {
-      return ctx.prisma.todo.findMany({
-        where: {
-          userId: ctx.session.user.id,
-        },
-        orderBy: {
-          createdAt: input.order,
-        },
-      });
+    .query(async ({ ctx, input }) => {
+      const [uncompleted, completed] = await Promise.all([
+        ctx.prisma.todo.findMany({
+          where: {
+            userId: ctx.session.user.id,
+            completed: false,
+          },
+          orderBy: {
+            createdAt: input.order,
+          },
+        }),
+        ctx.prisma.todo.findMany({
+          where: {
+            userId: ctx.session.user.id,
+            completed: true,
+          },
+          orderBy: {
+            createdAt: input.order,
+          },
+        }),
+      ]);
+
+      return [...uncompleted, ...completed];
     }),
   create: protectedProcedure
-    .input(z.object({ body: z.string().min(1).max(200) }))
+    .input(z.object({ title: z.string().min(1).max(200) }))
     .mutation(async ({ ctx, input }) => {
       const ratelimit = new Ratelimit({
         redis: Redis.fromEnv(),
@@ -37,9 +51,32 @@ export const todoRouter = router({
         data: {
           todos: {
             create: {
-              body: input.body,
+              title: input.title,
             },
           },
+        },
+      });
+
+      return { message: 'Success' };
+    }),
+  update: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        title: z.string().min(1).max(200),
+        description: z.nullable(z.string().max(2000)),
+        completed: z.boolean(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.todo.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          title: input.title,
+          description: input.description,
+          completed: input.completed,
         },
       });
 

@@ -12,11 +12,13 @@ datasource db {
 }
 
 model Todo {
-    id        String   @id @default(cuid())
-    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-    userId    String
-    body      String   @db.VarChar(200)
-    createdAt DateTime @default(now())
+    id          String   @id @default(cuid())
+    user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId      String
+    title       String   @db.VarChar(200)
+    description String?  @db.VarChar(2000)
+    completed   Boolean  @default(false)
+    createdAt   DateTime @default(now())
 
     @@index([userId])
 }
