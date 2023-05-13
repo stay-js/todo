@@ -162,9 +162,9 @@ const Todos: React.FC<{ order: Order }> = ({ order }) => {
                         <Button
                           disabled={isDeleting || isUpdating}
                           className="flex w-full"
-                          onClick={() =>
-                            updateTodo({ ...currentTodo, completed: !currentTodo.completed })
-                          }
+                          onClick={() => {
+                            updateTodo({ ...currentTodo, completed: !currentTodo.completed });
+                          }}
                         >
                           Mark as {currentTodo.completed ? 'Pending' : 'Done'}
                         </Button>
