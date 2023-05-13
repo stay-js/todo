@@ -42,19 +42,19 @@ const Todos: React.FC<{ order: Order }> = ({ order }) => {
     onError: () => toast.error('Failed to delete Todo! Please try again later.'),
   });
 
-  const onTodoUpdate = () => {
-    if (!currentTodo || !titleRef.current || !descriptionRef.current) return;
+  const onClose = () => {
+    if (!currentTodo || !titleRef.current || !descriptionRef.current) {
+      return setSelectedTodoID(null);
+    }
 
     const title = titleRef.current.value.trim();
     const description = descriptionRef.current.value.trim();
 
-    if (currentTodo.title === title && currentTodo.description === description) return;
+    if (currentTodo.title === title && currentTodo.description === description) {
+      return setSelectedTodoID(null);
+    }
 
     updateTodo({ ...currentTodo, title, description });
-  };
-
-  const onClose = () => {
-    onTodoUpdate();
     setSelectedTodoID(null);
   };
 
@@ -132,7 +132,7 @@ const Todos: React.FC<{ order: Order }> = ({ order }) => {
                     </Dialog.Title>
 
                     <Dialog.Description
-                      className="m-0 grid gap-4 pt-4 text-sm text-neutral-200 sm:grid-cols-[3fr_1fr]"
+                      className="m-0 grid gap-4 pt-4 text-sm text-neutral-200 lg:grid-cols-[3fr_1fr]"
                       as="div"
                     >
                       <div className="flex flex-col gap-2">
@@ -150,14 +150,7 @@ const Todos: React.FC<{ order: Order }> = ({ order }) => {
                         />
                       </div>
 
-                      <div className="grid h-fit grid-cols-2 gap-2 sm:grid-cols-none">
-                        <Button
-                          disabled={isDeleting || isUpdating}
-                          className="flex w-full"
-                          onClick={onTodoUpdate}
-                        >
-                          {isUpdating ? 'Saving...' : 'Save'}
-                        </Button>
+                      <div className="flex flex-col gap-2 sm:flex-row lg:flex-col ">
                         <Button
                           disabled={isDeleting || isUpdating}
                           className="flex w-full"
@@ -165,7 +158,9 @@ const Todos: React.FC<{ order: Order }> = ({ order }) => {
                             updateTodo({ ...currentTodo, completed: !currentTodo.completed });
                           }}
                         >
-                          Mark as {currentTodo.completed ? 'Pending' : 'Done'}
+                          {isUpdating
+                            ? 'Updating...'
+                            : `Mark as ${currentTodo.completed ? 'In Progress' : 'Done'}`}
                         </Button>
                         <Button
                           disabled={isDeleting || isUpdating}
