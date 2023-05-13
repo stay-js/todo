@@ -150,7 +150,7 @@ const Todos: React.FC<{ order: Order }> = ({ order }) => {
                         />
                       </div>
 
-                      <div className="flex flex-col gap-2">
+                      <div className="grid h-fit grid-cols-2 gap-2 sm:grid-cols-none">
                         <Button
                           disabled={isDeleting || isUpdating}
                           className="flex w-full"
@@ -170,10 +170,10 @@ const Todos: React.FC<{ order: Order }> = ({ order }) => {
                         <Button
                           disabled={isDeleting || isUpdating}
                           color="red"
-                          className="flex w-full"
+                          className="col-span-full flex w-full"
                           onClick={() => deleteTodo({ id: currentTodo.id })}
                         >
-                          {isDeleting ? 'Deleting...' : 'Delete'}
+                          {isDeleting ? 'Deleting...' : 'Delete Todo'}
                         </Button>
                       </div>
                     </Dialog.Description>
