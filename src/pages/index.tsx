@@ -226,7 +226,7 @@ const Feed: React.FC<{ session: Session }> = ({ session }) => {
 
     if (!inputRef.current?.value) return;
 
-    createTodo({ title: inputRef.current.value });
+    createTodo({ title: inputRef.current.value.trim() });
     inputRef.current.value = '';
   };
 
