@@ -45,11 +45,17 @@ const Todos: React.FC<{ order: Order }> = ({ order }) => {
   const onTodoUpdate = () => {
     if (!currentTodo || !titleRef.current || !descriptionRef.current) return;
 
-    updateTodo({
-      ...currentTodo,
-      title: titleRef.current?.value.trim(),
-      description: descriptionRef.current?.value.trim(),
-    });
+    const title = titleRef.current.value.trim();
+    const description = descriptionRef.current.value.trim();
+
+    if (currentTodo.title === title && currentTodo.description === description) return;
+
+    updateTodo({ ...currentTodo, title, description });
+  };
+
+  const onClose = () => {
+    onTodoUpdate();
+    setSelectedTodoID(null);
   };
 
   if (!todos && isLoading) {
@@ -77,12 +83,7 @@ const Todos: React.FC<{ order: Order }> = ({ order }) => {
   return (
     <>
       <Transition appear show={!!currentTodo} as={Fragment}>
-        <Dialog
-          as="div"
-          className="relative z-50"
-          initialFocus={descriptionRef}
-          onClose={() => setSelectedTodoID(null)}
-        >
+        <Dialog as="div" className="relative z-50" initialFocus={descriptionRef} onClose={onClose}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -107,7 +108,10 @@ const Todos: React.FC<{ order: Order }> = ({ order }) => {
             >
               <Dialog.Panel className="flex w-11/12 max-w-3xl flex-col gap-4 rounded-2xl bg-neutral-900 p-6 shadow-xl">
                 <div className="flex flex-col gap-2">
-                  <Dialog.Title className="flex items-center justify-between gap-4 text-lg font-bold text-neutral-50">
+                  <Dialog.Title
+                    className="flex items-center justify-between gap-4 text-lg font-bold text-neutral-50"
+                    as="div"
+                  >
                     <input
                       required
                       type="text"
@@ -121,16 +125,19 @@ const Todos: React.FC<{ order: Order }> = ({ order }) => {
                       type="button"
                       title="Close"
                       className="rounded-full p-1.5 transition-colors hover:bg-neutral-700"
-                      onClick={() => setSelectedTodoID(null)}
+                      onClick={onClose}
                     >
                       <TbX size={24} />
                     </button>
                   </Dialog.Title>
 
-                  <Dialog.Description className="m-0 grid gap-4 pt-4 text-sm text-neutral-200 sm:grid-cols-[3fr_1fr]">
+                  <Dialog.Description
+                    className="m-0 grid gap-4 pt-4 text-sm text-neutral-200 sm:grid-cols-[3fr_1fr]"
+                    as="div"
+                  >
                     <div className="flex flex-col gap-2">
                       <h3 className="flex items-center gap-2 text-base font-semibold">
-                        <TbAlignJustified size={26} className="inline-block" />
+                        <TbAlignJustified size={26} />
                         Description
                       </h3>
                       <textarea
@@ -144,7 +151,7 @@ const Todos: React.FC<{ order: Order }> = ({ order }) => {
                     </div>
 
                     {currentTodo && (
-                      <div className="flex min-w-[25%] flex-col gap-2">
+                      <div className="flex flex-col gap-2">
                         <Button
                           disabled={isDeleting || isUpdating}
                           className="flex w-full"
@@ -290,6 +297,7 @@ const Feed: React.FC<{ session: Session }> = ({ session }) => {
     </main>
   );
 };
+
 const Page: NextPage = () => {
   const { data: session } = useSession();
 
