@@ -31,15 +31,15 @@ const Todos: React.FC<{ order: Order }> = ({ order }) => {
     { onSettled: (data) => setTodos(data) },
   );
 
+  const { mutate: updateTodo, isLoading: isUpdating } = trpc.todos.update.useMutation({
+    onSuccess: () => refetch(),
+    onError: () => toast.error('Failed to update Todo! Please try again later.'),
+  });
+
   const { mutate: deleteTodo, isLoading: isDeleting } = trpc.todos.delete.useMutation({
     onSettled: () => setSelectedTodoID(null),
     onSuccess: () => refetch(),
     onError: () => toast.error('Failed to delete Todo! Please try again later.'),
-  });
-
-  const { mutate: updateTodo, isLoading: isUpdating } = trpc.todos.update.useMutation({
-    onSuccess: () => refetch(),
-    onError: () => toast.error('Failed to update Todo! Please try again later.'),
   });
 
   const onTodoUpdate = () => {
