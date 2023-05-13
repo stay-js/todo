@@ -82,75 +82,74 @@ const Todos: React.FC<{ order: Order }> = ({ order }) => {
 
   return (
     <>
-      <Transition appear show={!!currentTodo} as={Fragment}>
-        <Dialog as="div" className="relative z-50" initialFocus={descriptionRef} onClose={onClose}>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
+      {currentTodo && (
+        <Transition appear show as={Fragment}>
+          <Dialog
+            as="div"
+            className="relative z-50"
+            initialFocus={descriptionRef}
+            onClose={onClose}
           >
-            <div className="fixed inset-0 bg-black bg-opacity-50" />
-          </Transition.Child>
-
-          <div className="fixed inset-0 grid place-items-center">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
             >
-              <Dialog.Panel className="flex w-11/12 max-w-3xl flex-col gap-4 rounded-2xl bg-neutral-900 p-6 shadow-xl">
-                <div className="flex flex-col gap-2">
-                  <Dialog.Title
-                    className="flex items-center justify-between gap-4 text-lg font-bold text-neutral-50"
-                    as="div"
-                  >
-                    <input
-                      required
-                      type="text"
-                      className="w-full rounded bg-transparent px-1 py-2 text-lg font-semibold"
-                      maxLength={200}
-                      defaultValue={currentTodo?.title}
-                      ref={titleRef}
-                    />
+              <div className="fixed inset-0 bg-black bg-opacity-50" />
+            </Transition.Child>
 
-                    <button
-                      type="button"
-                      title="Close"
-                      className="rounded-full p-1.5 transition-colors hover:bg-neutral-700"
-                      onClick={onClose}
+            <div className="fixed inset-0 grid place-items-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+              >
+                <Dialog.Panel className="flex w-11/12 max-w-3xl flex-col gap-4 rounded-2xl bg-neutral-900 p-6 shadow-xl">
+                  <div className="flex flex-col gap-2">
+                    <Dialog.Title
+                      className="flex items-center justify-between gap-4 text-lg font-bold text-neutral-50"
+                      as="div"
                     >
-                      <TbX size={24} />
-                    </button>
-                  </Dialog.Title>
-
-                  <Dialog.Description
-                    className="m-0 grid gap-4 pt-4 text-sm text-neutral-200 sm:grid-cols-[3fr_1fr]"
-                    as="div"
-                  >
-                    <div className="flex flex-col gap-2">
-                      <h3 className="flex items-center gap-2 text-base font-semibold">
-                        <TbAlignJustified size={26} />
-                        Description
-                      </h3>
-                      <textarea
-                        className="w-full resize-none rounded-xl bg-zinc-800 p-3 text-sm font-normal"
-                        placeholder="Add detailed description here..."
-                        rows={15}
-                        maxLength={2000}
-                        defaultValue={currentTodo?.description ?? ''}
-                        ref={descriptionRef}
+                      <input
+                        required
+                        type="text"
+                        className="w-full rounded bg-transparent px-1 py-2 text-lg font-semibold"
+                        maxLength={200}
+                        defaultValue={currentTodo.title}
+                        ref={titleRef}
                       />
-                    </div>
 
-                    {currentTodo && (
+                      <button
+                        type="button"
+                        title="Close"
+                        className="rounded-full p-1.5 transition-colors hover:bg-neutral-700"
+                        onClick={onClose}
+                      >
+                        <TbX size={24} />
+                      </button>
+                    </Dialog.Title>
+
+                    <Dialog.Description
+                      className="m-0 grid gap-4 pt-4 text-sm text-neutral-200 sm:grid-cols-[3fr_1fr]"
+                      as="div"
+                    >
+                      <div className="flex flex-col gap-2">
+                        <h3 className="flex items-center gap-2 text-base font-semibold">
+                          <TbAlignJustified size={26} />
+                          Description
+                        </h3>
+                        <textarea
+                          className="w-full resize-none rounded-xl bg-zinc-800 p-3 text-sm font-normal"
+                          placeholder="Add detailed description here..."
+                          rows={15}
+                          maxLength={2000}
+                          defaultValue={currentTodo.description ?? ''}
+                          ref={descriptionRef}
+                        />
+                      </div>
+
                       <div className="flex flex-col gap-2">
                         <Button
                           disabled={isDeleting || isUpdating}
@@ -177,14 +176,14 @@ const Todos: React.FC<{ order: Order }> = ({ order }) => {
                           {isDeleting ? 'Deleting...' : 'Delete'}
                         </Button>
                       </div>
-                    )}
-                  </Dialog.Description>
-                </div>
-              </Dialog.Panel>
-            </Transition.Child>
-          </div>
-        </Dialog>
-      </Transition>
+                    </Dialog.Description>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </Dialog>
+        </Transition>
+      )}
 
       <div className="flex max-h-[60vh] flex-col gap-4 overflow-auto" ref={parent}>
         {todos?.map(({ id, title, completed }) => (
