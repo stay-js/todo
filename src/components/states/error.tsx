@@ -8,7 +8,7 @@ export const Error: React.FC<{ size?: number }> = ({ size = 48 }) => (
 );
 
 export const ErrorPage: React.FC = () => (
-  <main className="absolute inset-0 grid place-content-center">
+  <main className="grid place-content-center">
     <Error size={64} />
   </main>
 );

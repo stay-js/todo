@@ -16,7 +16,7 @@ const App: AppType<{ session: Session | null }> = ({
     <Analytics />
     <Toaster toastOptions={{ duration: 2000 }} />
 
-    <div className="flex min-h-screen flex-col justify-between">
+    <div className="grid min-h-screen grid-rows-[1fr_auto]">
       <Component {...pageProps} />
       <Footer />
     </div>

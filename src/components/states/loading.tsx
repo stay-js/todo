@@ -9,12 +9,7 @@ export const LoadingSpinner: React.FC<{ size?: number }> = ({ size = 32 }) => (
 );
 
 export const LoadingPage: React.FC = () => (
-  <main
-    className="grid place-content-center"
-    style={{
-      height: 'calc(100vh - 4.5rem)',
-    }}
-  >
+  <main className="grid place-content-center">
     <LoadingSpinner size={48} />
   </main>
 );
