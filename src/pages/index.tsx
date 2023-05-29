@@ -7,11 +7,12 @@ import { useEffect, useState, useRef, Fragment } from 'react';
 import { signOut, useSession } from 'next-auth/react';
 import { Dialog, Transition } from '@headlessui/react';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { TbAlertCircle, TbAlignJustified, TbSelector, TbX } from 'react-icons/tb';
+import { TbAlignJustified, TbSelector, TbX } from 'react-icons/tb';
 import { toast } from 'react-hot-toast';
 import { trpc } from '~/utils/trpc';
-import { Meta } from '~/components/meta';
 import { Button } from '~/components/button';
+import { Error, LoadingPage, LoadingSpinner } from '~/components/states';
+import { Meta } from '~/components/meta';
 
 type Order = 'desc' | 'asc';
 
@@ -58,27 +59,8 @@ const Todos: React.FC<{ order: Order }> = ({ order }) => {
     setSelectedTodoID(null);
   };
 
-  if (!todos && isLoading) {
-    return (
-      <div className="py-6">
-        <svg className="mx-auto h-8 w-8 animate-spin fill-none" viewBox="0 0 24 24">
-          <circle className="stroke-green-500 stroke-[4] opacity-25" cx="12" cy="12" r="10" />
-          <path
-            className="fill-green-500"
-            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-          />
-        </svg>
-      </div>
-    );
-  }
-
-  if (isError)
-    return (
-      <div className="flex flex-col items-center gap-2">
-        <TbAlertCircle size={48} color="red" className="animate-bounce" />
-        <span className="text-lg font-bold">Something went wrong... try again later!</span>
-      </div>
-    );
+  if (!todos && isLoading) return <LoadingSpinner />;
+  if (isError) return <Error />;
 
   return (
     <>
@@ -306,7 +288,7 @@ const Page: NextPage = () => {
     <>
       <Meta path="/" title="Todo" description="Todo App with GitHub authentication." />
 
-      {session ? <Feed session={session} /> : <div />}
+      {session ? <Feed session={session} /> : <LoadingPage />}
     </>
   );
 };
