@@ -6,7 +6,7 @@ import { Toaster } from 'react-hot-toast';
 import { Footer } from '~/components/footer';
 import { trpc } from '~/utils/trpc';
 
-import '@styles/globals.css';
+import '~/styles/globals.css';
 
 const App: AppType<{ session: Session | null }> = ({
   Component,
