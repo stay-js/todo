@@ -28,6 +28,9 @@ export const authOptions: NextAuthOptions = {
       clientSecret: env.GITHUB_CLIENT_SECRET,
     }),
   ],
+  pages: {
+    signIn: '/sign-in',
+  },
 };
 
 export const getServerAuthSession = async (ctx: {

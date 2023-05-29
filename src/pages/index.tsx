@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import type { Session } from 'next-auth';
 import type { Todo } from '@prisma/client';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { useEffect, useState, useRef, Fragment } from 'react';
 import { signOut, useSession } from 'next-auth/react';
 import { Dialog, Transition } from '@headlessui/react';
@@ -11,7 +12,6 @@ import { toast } from 'react-hot-toast';
 import { trpc } from '@utils/trpc';
 import { Meta } from '@components/Meta';
 import { Button } from '@components/Button';
-import { SignIn } from '@components/SignIn';
 
 type Order = 'desc' | 'asc';
 
@@ -115,7 +115,7 @@ const Todos: React.FC<{ order: Order }> = ({ order }) => {
                       <input
                         required
                         type="text"
-                        className="w-full rounded bg-transparent px-1 py-2 text-lg font-semibold"
+                        className="w-full rounded bg-transparent px-1 py-3 text-lg font-semibold"
                         maxLength={200}
                         defaultValue={currentTodo.title}
                         ref={titleRef}
@@ -293,13 +293,20 @@ const Feed: React.FC<{ session: Session }> = ({ session }) => {
 };
 
 const Page: NextPage = () => {
-  const { data: session } = useSession();
+  const router = useRouter();
+
+  const { data: session } = useSession({
+    required: true,
+    onUnauthenticated: () => {
+      void router.push(`/sign-in?callbackUrl=${encodeURIComponent(router.asPath)}`);
+    },
+  });
 
   return (
     <>
       <Meta path="/" title="Todo" description="Todo App with GitHub authentication." />
 
-      {session ? <Feed session={session} /> : <SignIn />}
+      {session ? <Feed session={session} /> : <div />}
     </>
   );
 };
