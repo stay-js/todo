@@ -1,8 +1,8 @@
 import type { CreateNextContextOptions } from '@trpc/server/adapters/next';
 import SuperJSON from 'superjson';
-import { getServerAuthSession } from '@server/auth';
 import { initTRPC, TRPCError } from '@trpc/server';
-import { prisma } from '@server/db';
+import { getServerAuthSession } from '~/server/auth';
+import { prisma } from '~/server/db';
 
 export const createContext = async ({ req, res }: CreateNextContextOptions) => {
   const session = await getServerAuthSession({ req, res });

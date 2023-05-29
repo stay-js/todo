@@ -3,8 +3,8 @@ import type { AppType } from 'next/dist/shared/lib/utils';
 import { SessionProvider } from 'next-auth/react';
 import { Analytics } from '@vercel/analytics/react';
 import { Toaster } from 'react-hot-toast';
-import { Footer } from '@components/Footer';
-import { trpc } from '@utils/trpc';
+import { Footer } from '~/components/footer';
+import { trpc } from '~/utils/trpc';
 
 import '@styles/globals.css';
 

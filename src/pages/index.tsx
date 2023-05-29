@@ -9,9 +9,9 @@ import { Dialog, Transition } from '@headlessui/react';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { TbAlertCircle, TbAlignJustified, TbSelector, TbX } from 'react-icons/tb';
 import { toast } from 'react-hot-toast';
-import { trpc } from '@utils/trpc';
-import { Meta } from '@components/Meta';
-import { Button } from '@components/Button';
+import { trpc } from '~/utils/trpc';
+import { Meta } from '~/components/meta';
+import { Button } from '~/components/button';
 
 type Order = 'desc' | 'asc';
 

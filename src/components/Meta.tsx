@@ -20,6 +20,7 @@ export const Meta: React.FC<{
     />
 
     <meta name="theme-color" content="#171717" />
+    <meta name="color-scheme" content="dark" />
 
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="website" />
