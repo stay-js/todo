@@ -212,7 +212,7 @@ const Feed: React.FC<{ session: Session }> = ({ session }) => {
 
   return (
     <main>
-      <div className="relative flex items-center justify-between px-6 py-4 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-neutral-700">
+      <div className="relative flex items-center justify-between p-4 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-neutral-700">
         <div className="flex items-center gap-4">
           {session.user?.image && (
             <Image
