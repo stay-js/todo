@@ -12,7 +12,7 @@ const Anchor: React.FC<{ children: React.ReactNode; href: string }> = ({ childre
 );
 
 export const Footer: React.FC = () => (
-  <footer className="row-start-2 flex flex-col items-center justify-between bg-neutral-800 p-6 text-white md:flex-row">
+  <footer className="row-start-2 flex flex-col items-center justify-between bg-neutral-800 px-4 py-6 text-white md:flex-row">
     <p>
       Made with &#10084;&#65039; by <Anchor href="https://znagy.hu">stay</Anchor> from{' '}
       <b>Hungary</b>.
