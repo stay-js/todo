@@ -1,11 +1,14 @@
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { signIn } from 'next-auth/react';
+import { useSession, signIn } from 'next-auth/react';
 import { FaGithub } from 'react-icons/fa';
 import { Meta } from '~/components/meta';
 
 const Page: NextPage = () => {
   const router = useRouter();
+  const { data: session } = useSession();
+
+  if (session) void router.push('/');
 
   return (
     <>
