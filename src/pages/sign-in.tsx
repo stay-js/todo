@@ -19,7 +19,13 @@ const Page: NextPage = () => {
         <button
           type="button"
           className="flex items-center gap-2 rounded-lg bg-[#24292F] px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-[#24292F]/90"
-          onClick={() => signIn('github', { callbackUrl: router.query.callbackUrl as string })}
+          onClick={() =>
+            signIn('github', {
+              callbackUrl: Array.isArray(router.query.callbackUrl)
+                ? router.query.callbackUrl[0]
+                : router.query.callbackUrl ?? '/',
+            })
+          }
         >
           <FaGithub size={18} />
           Sign in with Github
