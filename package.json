@@ -23,7 +23,6 @@
     "@trpc/server": "^10.29.1",
     "@upstash/ratelimit": "^0.4.3",
     "@upstash/redis": "^1.21.0",
-    "@vercel/analytics": "^1.0.1",
     "clsx": "^1.2.1",
     "next": "13.4.4",
     "next-auth": "^4.22.1",
