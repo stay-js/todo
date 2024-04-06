@@ -21,7 +21,7 @@ export const Footer: React.FC = () => (
     <div className="flex gap-2 md:gap-4">
       <Anchor href="https://github.com/stay-js/todo">GitHub</Anchor>
       <Anchor href="https://vercel.com">Vercel</Anchor>
-      <Anchor href="https://planetscale.com">PlanetScale</Anchor>
+      <Anchor href="https://aiven.io">Aiven</Anchor>
       <Anchor href="https://upstash.com">Upstash</Anchor>
     </div>
   </footer>

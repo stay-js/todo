@@ -14,7 +14,7 @@ Simple Todo App with [GitHub](https://github.com) authentication, built with [t3
 - **Deployment**: [Vercel Serverless (/api)](https://vercel.com/docs/concepts/functions/serverless-functions)
 - [tRPC](https://trpc.io)
 - [Auth.js (NextAuth)](https://authjs.dev)
-- [PlanetScale (MySQL)](https://planetscale.com)
+- [Aiven (MySQL)](https://aiven.io)
 - [Prisma](https://prisma.io)
 - [Upstash (Redis)](https://upstash.com)
 - [Upstash Rate Limit](https://github.com/upstash/ratelimit)
